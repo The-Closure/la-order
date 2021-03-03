@@ -34,15 +34,38 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'role'       => 'require|exists:roles,id',
         ]);
 
         Auth::login($user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]));
+        $role = $user->get('role');
+        $User=new User();
+        $User->name = $user->name;
+        $User->phone = $user->phone;
+        $User->password = $user->password;
+        $user->assignRole($role);
+        if($role==(Spatie\Permission\Models\Role::findByName('admin'))){
+            return redirect()->route('admin.show');
+
+        }
+        elseif($role==(Spatie\Permission\Models\Role::findByName('onwer'))){
+            return redirect()->route('onwer.show');
+
+        }
+        elseif($role==(Spatie\Permission\Models\Role::findByName('delivery'))){
+            return redirect()->route('delivery.show');
+
+        }
+        else{
+            return redirect()->route('customer.show');
+        }
+
 
         event(new Registered($user));
 
