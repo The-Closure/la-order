@@ -21,10 +21,20 @@
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="phone" :value="__('phone')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
             </div>
+            <div class="field">
+                <label class="label">permissin</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="roles_id">
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                  </div>
 
             <!-- Password -->
             <div class="mt-4">
