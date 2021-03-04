@@ -11,19 +11,21 @@ class Meal extends Model
 {
     use HasFactory;
     protected $fillable=['name','desc','status','featured','price','restaurant_id','category_id'];
-    //the meal belong to one category 
+    //the meal belong to one category
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-    //the meal belong to one category 
+    //the meal belong to one category
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
     }
-    //the meal belong to one order 
+ /**
+     * Get the phone associated with the user.
+     */
     public function orderItem()
     {
-        return $this->belongsTo(Orderitem::class);
+        return $this->hasOne(OrderItem::class);
     }
 }

@@ -13,7 +13,7 @@ class AddAreaIdToAddressesTabel extends Migration
      */
     public function up()
     {
-        Schema::table('addresses_table', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->foreignId('area_id')->after("id")->constrained();
         });
 
