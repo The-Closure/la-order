@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\OrderController;
 
+use App\Http\controller\CategoryController;
+use App\Http\Controllers\restaurant\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,11 @@ Route::get('/dashboard', function () {
 
 Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
+});
+Route::prefix('/restaurant')->group(function () {
+    Route::resource('orders', OrderController::class)->except('index');
+    Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+
 });
 
 require __DIR__.'/auth.php';
