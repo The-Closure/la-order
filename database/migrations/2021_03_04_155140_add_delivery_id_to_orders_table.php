@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAreaIdToAddressesTabel extends Migration
+class AddDeliveryIdToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class AddAreaIdToAddressesTabel extends Migration
      */
     public function up()
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->foreignId('area_id')->after("id")->constrained();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('delivery_id')->constrained();
         });
-
     }
 
     /**
@@ -26,10 +25,10 @@ class AddAreaIdToAddressesTabel extends Migration
      */
     public function down()
     {
-        Schema::table('addresses_tabel', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
+        $table->dropFoeign('delivery_id');
+        $table->dropColumn('delivery_id');
 
-            $table->dropForeign('area_id');
-            $table->dropColumn('area_id');
         });
     }
 }

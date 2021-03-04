@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\controller\CategoryController;
-
+use App\Http\Controllers\Customer\MealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +26,5 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('/restaurants/{rest_id}/categories/{cat_id}', [MealController::class, 'index']);
