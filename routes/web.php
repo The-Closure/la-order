@@ -25,8 +25,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['prefix'=>'delivery','namespace'=>'delivery'],function(){
-    Route::view('/index', 'order')->name('my_order');
+Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'auth'],function(){
+    Route::get('/index',[DeliveryController::class,'my_order_items']);
+    Route::get('/show',[DeliveryController::class,'show']);
+    Route::get('/update',[DeliveryController::class,'update']);
 });
 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\delivery;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Delivery;
 
 class deliverycontroller extends Controller
 {
@@ -15,7 +17,7 @@ class deliverycontroller extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -40,7 +42,9 @@ class deliverycontroller extends Controller
             'working-hours'   => 'required|string|min:2|max:255',
             'vehicle'         => 'required|string|min:15',
         ]);
+        $userId = Auth::id();
         $delivery = Delivery::create($request->only(['working-hours', 'vehicle']));
+        $delivery->user_id=$userId;
         return redirect()->route('delviery.show');
     }
 
@@ -52,7 +56,22 @@ class deliverycontroller extends Controller
      */
     public function show($id)
     {
-        $order = Order::where('delivery_id',$delivery_id)-> ->whereIn('votes', ['', '',]);
+        $user=Auth::user();
+        $userId = Auth::id();
+        $delivery=Delivery::where('user_id',$userId);
+        return view('delivery.show', ['user' => $user, 'delivery' => $delivery]);
+        
+        
+    }
+    public function my_order_items($id){
+        
+        $userId = Auth::id();
+        $delivery=Delivery::where('user_id',$userId);
+        $user = Auth::user();
+        // $orders = $user->deliveryOrders;
+        // $delivery_id=$delivery->id;
+        $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["preaper"]);
+        return view('order.show', ['orders' => $orders,]);
     }
 
     /**
@@ -63,7 +82,7 @@ class deliverycontroller extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('order.show', ['orders' => $orders,]);
     }
 
     /**
