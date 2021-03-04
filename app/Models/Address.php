@@ -10,7 +10,7 @@ class Address extends Model
 {
     use HasFactory;
 
-protected $fillable=["city","street","details"];
+protected $fillable=["city","street","area_id","user_id","details"];
 
  //Get the area that owns the address.
 

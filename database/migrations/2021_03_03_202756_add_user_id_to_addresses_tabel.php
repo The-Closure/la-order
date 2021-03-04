@@ -13,7 +13,7 @@ class AddUserIdToAddressesTabel extends Migration
      */
     public function up()
     {
-        Schema::table('addresses_tabel', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->foreignId("user_id")->after("id")->constrained();
         });
     }
