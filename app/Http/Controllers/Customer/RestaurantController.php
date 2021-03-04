@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\category;
+use App\Models\Restaurant;
+use Illuminate\Database\Eloquent\Builder;
 
-class CategoryController extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $restaurants = Restaurant::all();
+        return view("restaurants.index",["restaurants" =>$restaurants]);
     }
 
     /**
@@ -23,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        //
     }
 
     /**
@@ -34,11 +39,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'name'             => 'required|string|min:2|max:255',
-        'description'      => 'required|string|min:15',
-        
-        ]}
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -46,9 +48,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($restaurant_id)
     {
-        //
+       $restaurant=Restaurant::find($restaurant_id);
+
+       $categories=category::whereHas("meal",function(Builder $query)use($restaurant_id){
+        $query->where("restaurant_id",$restaurant_id);})->get();
+
+       return view("restaurants.show",["restaurant"=>$restaurant,"categories"=>$categories]);
+
     }
 
     /**
