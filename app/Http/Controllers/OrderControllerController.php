@@ -14,7 +14,10 @@ class OrderControllerController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Auth:user()->orders;
+        return view('order.index','orders'=>$orders);
+        
+
     }
 
     /**
@@ -35,7 +38,32 @@ class OrderControllerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $request->validate([
+            'total' => 'required',
+            'method'=> 'required',
+            'customer_id'=> 'required',
+            
+        ]);
+        $order=Auth::user()->orders()->create(['total'  => $request->total,
+        'status' => 'pending',
+        'method'=> 'direct',
+        'rating'=> '',
+        'feedback'=> '',
+        'customer_id' => $request->customer_id,
+        'note'=> '' );
+        $orderItems = $request->items;
+        foreach($orderitems as $object)
+            {
+                $orderitem=$order->items()->create(['meal_id' => $object['meal_id'],'quantite'=> $object['quantite'],'price'=> $object['price']]));
+                // $object->validate([
+                //     'meal_id' => 'required',
+                //     'quantite' => 'required|min:1',
+                //     'price'=> 'required',
+                    
+                // ]);
+            }
+        return view('Order.show',['order'=>$order]);
     }
 
     /**
@@ -46,7 +74,7 @@ class OrderControllerController extends Controller
      */
     public function show(OrderController $orderController)
     {
-        //
+            return view('order.show',['order'=>$orderController]);
     }
 
     /**

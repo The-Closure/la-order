@@ -11,6 +11,7 @@ class OrderItem extends Model
      /**
      * Get the order that owns the orderitem.
      */
+    protected $fillable=['meal_id','quantite','price'];
     public function order()
     {
         return $this->belongsTo(Order::class);
