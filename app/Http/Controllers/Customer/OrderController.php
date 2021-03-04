@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Models\Customer\OrderController;
+use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class OrderControllerController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class OrderControllerController extends Controller
      */
     public function index()
     {
-        $orders = Auth:user()->orders;
-        return view('order.index','orders'=>$orders);
+        $orders = Auth::user()->orders;
+        return view('order.index', ['orders'=>$orders]);
         
 
     }
@@ -51,11 +52,16 @@ class OrderControllerController extends Controller
         'rating'=> '',
         'feedback'=> '',
         'customer_id' => $request->customer_id,
-        'note'=> '' );
+        'note'=> '' 
+        ]);
         $orderItems = $request->items;
         foreach($orderitems as $object)
             {
-                $orderitem=$order->items()->create(['meal_id' => $object['meal_id'],'quantite'=> $object['quantite'],'price'=> $object['price']]));
+                $orderitem = $order->items()->create([
+                    'meal_id' => $object['meal_id'],
+                    'quantite'=> $object['quantite'],
+                    'price'=> $object['price']
+                    ]);
                 // $object->validate([
                 //     'meal_id' => 'required',
                 //     'quantite' => 'required|min:1',
