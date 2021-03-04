@@ -69,7 +69,7 @@ class OrderControllerController extends Controller
      */
     public function update(Request $request, OrderController $orderController)
     {
-        //
+       
     }
 
     /**

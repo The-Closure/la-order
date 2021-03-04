@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\controller\CategoryController;
-
+use App\Http\Controllers\OrderControllerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +26,4 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');
