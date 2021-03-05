@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\http\Models\Order;
+use app\http\Models\meal;
 
 class OrderItem extends Model
 {
@@ -11,6 +13,7 @@ class OrderItem extends Model
      /**
      * Get the order that owns the orderitem.
      */
+    protected $fillable=['meal_id','quantite','price'];
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -22,5 +25,4 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Meal::class);
     }
-}
 }
