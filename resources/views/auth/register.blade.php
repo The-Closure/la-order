@@ -21,10 +21,17 @@
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="phone" :value="__('phone')" />
+                <x-label for="email" :value="__('Email')" />
 
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
+            <!--phone-->
+                <div>
+                    <x-label for="phone" :value="__('phone')" />
+                    
+                    <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
+                </div>
+            <!-- roles-->
             <div class="field">
                 <label class="label">permissin</label>
                 <div class="control">

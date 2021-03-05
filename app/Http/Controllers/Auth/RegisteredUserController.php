@@ -16,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class RegisteredUserController extends Controller
 {
+    use HasRoles;
     /**
      * Display the registration view.
      *
@@ -37,9 +38,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        //dd();
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'role'       => 'require|exists:roles,id',
         ]);
@@ -47,12 +50,16 @@ class RegisteredUserController extends Controller
         Auth::login($user = User::create([
             'name' => $request->name,
             'phone' => $request->phone,
+            'email' => $request->email,
+            //'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
         ]));
         $role = $user->get('role');
         $User=new User();
         $User->name = $user->name;
         $User->phone = $user->phone;
+        //$User->role_id = $request->role_id;
+        $User->email = $user->email;
         $User->password = $user->password;
         $user->assignRole($role);
         if($role==(Spatie\Permission\Models\Role::findByName('admin'))){
