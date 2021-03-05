@@ -5,7 +5,7 @@ namespace App\Http\Controllers\resturant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Image;
-use App\Models\Meals;
+use App\Models\Meal;
 use App\Models\Category;
 
 class MealController extends Controller
@@ -17,7 +17,7 @@ class MealController extends Controller
      */
     public function index()
     {
-        
+        $meals = Meal::all();
 
         return view('meals.index', ['meals' => $meals]);
     }
@@ -45,12 +45,12 @@ class MealController extends Controller
         $request->validate([
             'name'        => 'required|string|min:4|max:255',
             'desc'        => 'required|string|min:15',
-            /**'status'*/      
+            'status'      => 'required|boolean',
             'featured'    => 'required|file|image',
-            'price'       => 'required|numeric',
+            'price'       => 'required|integer',
             'category_id' => 'required|exists:categories,id',
         ]);
-    
+
     $meal = new Meal();
     $meal->name = $request->name;
     $meal->desc = $request->desc;
@@ -58,7 +58,7 @@ class MealController extends Controller
     $meal->catigory_id = $request->catigory_id;
     $meal->name = $request->name;
     $file = $request->file('featured');
-    
+
         $url = '/storage/meals/'  . $file->extension();
         Image::make($file)
             ->resize(600, 500)
@@ -70,9 +70,9 @@ class MealController extends Controller
         } else {
             request()->session()->flash('danger', 'Something went wrong.');
         }
-        
+
         return redirect()->route('meals.show');
-        }   
+        }
     /**
      * Display the specified resource.
      *
@@ -114,20 +114,20 @@ class MealController extends Controller
         $request->validate([
             'name'        => 'required|string|min:4|max:255',
             'desc'        => 'required|string|min:15',
-            /**'status'*/      
+            'status'      => 'required|boolean',
             'featured'    => 'required|file|image',
-            'price'       => 'required|numeric',
+            'price'       => 'required|integer',
             'category_id' => 'required|exists:categories,id',
         ]);
-    
-    $meal = new Meal();
+
+        $meal = Meal::find($id);
     $meal->name = $request->name;
     $meal->desc = $request->desc;
     $meal->status = $request->status;
     $meal->catigory_id = $request->catigory_id;
     $meal->name = $request->name;
     $file = $request->file('featured');
-    
+
         $url = '/storage/meals/'  . $file->extension();
         Image::make($file)
             ->resize(600, 500)
@@ -139,7 +139,7 @@ class MealController extends Controller
         } else {
             request()->session()->flash('danger', 'Something went wrong.');
         }
-        
+
         return redirect()->route('meals.show');
     }
 
