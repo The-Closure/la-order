@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Customer;
+use App\Models\Customer\OrderController;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class OrderControllerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Auth::user()->orders;
-        return view('order.index', ['orders'=>$orders]);
-        
-
+        //
     }
 
     /**
@@ -39,37 +35,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $request->validate([
-            'total' => 'required',
-            'method'=> 'required',
-            'customer_id'=> 'required',
-            
-        ]);
-        $order=Auth::user()->orders()->create(['total'  => $request->total,
-        'status' => 'pending',
-        'method'=> 'direct',
-        'rating'=> '',
-        'feedback'=> '',
-        'customer_id' => $request->customer_id,
-        'note'=> '' 
-        ]);
-        $orderItems = $request->items;
-        foreach($orderitems as $object)
-            {
-                $orderitem = $order->items()->create([
-                    'meal_id' => $object['meal_id'],
-                    'quantite'=> $object['quantite'],
-                    'price'=> $object['price']
-                    ]);
-                // $object->validate([
-                //     'meal_id' => 'required',
-                //     'quantite' => 'required|min:1',
-                //     'price'=> 'required',
-                    
-                // ]);
-            }
-        return view('Order.show',['order'=>$order]);
+        //
     }
 
     /**
@@ -80,7 +46,7 @@ class OrderController extends Controller
      */
     public function show(OrderController $orderController)
     {
-            return view('order.show',['order'=>$orderController]);
+        //
     }
 
     /**
