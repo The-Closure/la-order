@@ -37,8 +37,10 @@ class CategoryController extends Controller
         $request->validate([
         'name'             => 'required|string|min:2|max:255',
         'description'      => 'required|string|min:15',
-        
-        ]}
+
+        ]);
+    }
+
 
     /**
      * Display the specified resource.
