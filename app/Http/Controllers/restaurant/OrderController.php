@@ -4,6 +4,7 @@ namespace App\Http\Controllers\restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -55,7 +56,17 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        $order->status=['preparing','delivering','rejected'];
+        $orderitems = OrderItem::all();
+
+
+        return view('order.show',
+        ['order' => $order ,
+          'orderitems' => $orderitems ,
+          'order_status'=> $order->status
+        ]);
+    }
     }
 
     /**
