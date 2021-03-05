@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Customer\OrderController;
-use App\Http\Controllers\Restaurant\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +19,7 @@ Route::get('/', function () {
 });
 
 
-Route::resource('\categories',CategoryController::class);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
