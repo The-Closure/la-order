@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Models\Customer\OrderItemController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\category;
+use App\Models\Restaurant;
+use Illuminate\Database\Eloquent\Builder;
 
-class OrderItemControllerController extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,8 @@ class OrderItemControllerController extends Controller
      */
     public function index()
     {
-        //
+        $restaurants = Restaurant::all();
+        return view("restaurants.index",["restaurants" =>$restaurants]);
     }
 
     /**
@@ -35,27 +39,38 @@ class OrderItemControllerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+        'name'             => 'required|string|min:2|max:255',
+        'description'      => 'required|string|min:15',
+
+        ]);
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer\OrderItemController  $orderItemController
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderItemController $orderItemController)
+    public function show($restaurant_id)
     {
-        //
+       $restaurant=Restaurant::find($restaurant_id);
+
+       $categories=category::whereHas("meal",function(Builder $query)use($restaurant_id){
+        $query->where("restaurant_id",$restaurant_id);})->get();
+
+       return view("restaurants.show",["restaurant"=>$restaurant,"categories"=>$categories]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Customer\OrderItemController  $orderItemController
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(OrderItemController $orderItemController)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +79,10 @@ class OrderItemControllerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer\OrderItemController  $orderItemController
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OrderItemController $orderItemController)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +90,10 @@ class OrderItemControllerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Customer\OrderItemController  $orderItemController
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderItemController $orderItemController)
+    public function destroy($id)
     {
         //
     }

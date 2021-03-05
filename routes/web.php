@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\controller\CategoryController;
-use App\Http\Controllers\Customer\OrderStatusController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Restaurant\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::resource('\categories',CategoryController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::prefix('/customer')->group(function () {
+    Route::resource('orders', OrderController::class)->only(['index', 'show']);
+});
+Route::prefix('/Restaurant')->group(function () {
+    Route::resource('orders', OrderController::class)->except('index');
+    Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+
+});
 
 require __DIR__.'/auth.php';
 

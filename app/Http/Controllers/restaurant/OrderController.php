@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\restaurant;
 
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderItem;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($restaurant_id)
     {
-        //
+        $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
+                $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
+                    $q->where('restaurant_id', $restaurant_id);
+                });
+        })->paginate(10);
+
+        // return view('order.index', ['orders' => $Orders]);
+        return $orders;
     }
 
     /**
@@ -23,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        //
     }
 
     /**
@@ -34,13 +45,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'name'             => 'required|string|min:2|max:255',
-        'description'      => 'required|string|min:15',
-
-        ]);
+        //
     }
-
 
     /**
      * Display the specified resource.
@@ -50,7 +56,17 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        $order->status=['preparing','delivering','rejected'];
+        $orderitems = OrderItem::all();
+
+
+        return view('order.show',
+        ['order' => $order ,
+          'orderitems' => $orderitems ,
+          'order_status'=> $order->status
+        ]);
+    }
     }
 
     /**
@@ -61,7 +77,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -73,7 +89,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
