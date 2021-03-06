@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
         $orders = Auth::user()->orders;
         return view('order.index', ['orders'=>$orders]);
-        
+
 
     }
 
@@ -39,12 +39,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'total' => 'required',
             'method'=> 'required',
             'customer_id'=> 'required',
-            
+
         ]);
         $order=Auth::user()->orders()->create(['total'  => $request->total,
         'status' => 'pending',
@@ -52,12 +52,12 @@ class OrderController extends Controller
         'rating'=> '',
         'feedback'=> '',
         'customer_id' => $request->customer_id,
-        'note'=> '' 
+        'note'=> ''
         ]);
         $orderItems = $request->items;
-        foreach($orderitems as $object)
+        foreach($orderItems as $object)
             {
-                $orderitem = $order->items()->create([
+                $orderItems = $order->items()->create([
                     'meal_id' => $object['meal_id'],
                     'quantite'=> $object['quantite'],
                     'price'=> $object['price']
@@ -66,7 +66,7 @@ class OrderController extends Controller
                 //     'meal_id' => 'required',
                 //     'quantite' => 'required|min:1',
                 //     'price'=> 'required',
-                    
+
                 // ]);
             }
         return view('Order.show',['order'=>$order]);

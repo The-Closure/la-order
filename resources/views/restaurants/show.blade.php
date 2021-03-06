@@ -20,7 +20,13 @@
                 <p class="content">
                      The Payment Way: {{ $restaurants->epayment }}
                 </p>
-
+                <a href="{{ route('meals.index') }}">
+            <div class="card-footer">
+                <div class="content pt-5">
+                    <div class="categories">
+                        @foreach ( $restaurants->categories as $categories )
+                        <span class="category is-primary">{{ $categories->name }}</span>
+                            @endforeach
             </div>
         </div>
     </div>
