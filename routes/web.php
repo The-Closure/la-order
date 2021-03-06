@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\controller\CategoryController;
 use App\Http\controller\delivery\DeliveryController;
 
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,5 +42,8 @@ Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'aut
     Route::get('/update',[DeliveryController::class,'update']);
 });
 
+Route::prefix('/admin')->group(function () {
+    Route::resource('restaurant', AdminRestaurantController::class);
+});
 
 require __DIR__.'/auth.php';
