@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
             //'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
         ]));
-        $role = $user->get('role');
+        $role = Role::find($request->role);
         $User=new User();
         $User->name = $user->name;
         $User->phone = $user->phone;
