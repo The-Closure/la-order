@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\OrderController;
-
-use App\Http\controller\CategoryController;
-use App\Http\Controllers\restaurant\OrderController;
-
+use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,8 +19,6 @@ Route::get('/', function () {
 });
 
 
-Route::resource('\categories',CategoryController::class);
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -36,6 +30,9 @@ Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
 
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('restaurant', AdminRestaurantController::class);
 });
 
 require __DIR__.'/auth.php';
