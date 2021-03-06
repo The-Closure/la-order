@@ -12,8 +12,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Validation\Rule;
 class User extends Authenticatable
 {
-    use HasRoles;
-    use HasFactory, Notifiable;
+     
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.

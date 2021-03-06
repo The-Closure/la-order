@@ -36,7 +36,7 @@
                 <label class="label">permissin</label>
                 <div class="control">
                   <div class="select">
-                    <select name="roles_id">
+                    <select name="role">
                         @foreach ($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach

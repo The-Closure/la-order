@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             'phone' => 'required|string|max:255|unique:users',
             'email' => 'required|string|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-            'role'       => 'require|exists:roles,id',
+            'role'       => 'required|exists:roles,id',
         ]);
 
         Auth::login($user = User::create([
@@ -62,19 +62,24 @@ class RegisteredUserController extends Controller
         $User->email = $user->email;
         $User->password = $user->password;
         $user->assignRole($role);
-        if($role==(Spatie\Permission\Models\Role::findByName('admin'))){
+        
+        if($role==(Role::findByName('admin'))){
+            return "you are admin";
             return redirect()->route('admin.show');
 
         }
-        elseif($role==(Spatie\Permission\Models\Role::findByName('onwer'))){
+        elseif($role==(Role::findByName('onwer'))){
+            return "you are onwer";
             return redirect()->route('onwer.show');
 
         }
-        elseif($role==(Spatie\Permission\Models\Role::findByName('delivery'))){
+        elseif($role==(Role::findByName('delivery'))){
+            return "you are delivery";
             return redirect()->route('delivery.show');
 
         }
         else{
+            return "you are costumer";
             return redirect()->route('customer.show');
         }
 
