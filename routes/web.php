@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\controller\CategoryController;
+use App\Http\controller\delivery\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,11 @@ Route::prefix('/Restaurant')->group(function () {
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
 
 });
+Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'auth'],function(){
+    Route::get('/index',[DeliveryController::class,'my_order_items']);
+    Route::get('/show',[DeliveryController::class,'show']);
+    Route::get('/update',[DeliveryController::class,'update']);
+});
+
 
 require __DIR__.'/auth.php';

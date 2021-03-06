@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasone(Order::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id');
+    }
+
+    public function del_orders()
+    {
+        return $this->hasMany(Order::class, 'delivery_id');
+    }
+
 }
