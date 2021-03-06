@@ -50,13 +50,12 @@ class RestaurantController extends Controller
      */
     public function show($restaurant_id)
     {
-       $restaurant=Restaurant::find($restaurant_id);
+       $restaurants=Restaurant::find($restaurant_id);
 
        $categories=category::whereHas("meal",function(Builder $query)use($restaurant_id){
         $query->where("restaurant_id",$restaurant_id);})->get();
 
-       return view("restaurants.show",["restaurant"=>$restaurant,"categories"=>$categories]);
-
+       return view("restaurants.show",["restaurants"=>$restaurants,"categories"=>$categories]);
     }
 
     /**

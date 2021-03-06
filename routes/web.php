@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\OrderController;
-
-use App\Http\controller\CategoryController;
 use App\Http\Controllers\restaurant\OrderController;
+use App\Http\Controllers\Customer\RestaurantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +20,6 @@ use App\Http\Controllers\restaurant\OrderController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 Route::resource('\categories',CategoryController::class);
 
 Route::get('/dashboard', function () {
@@ -31,6 +28,9 @@ Route::get('/dashboard', function () {
 
 Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
+});
+Route::prefix('/customer')->group(function () {
+    Route::resource('retaurant', RestaurantController::class)->only(['index', 'show']);
 });
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
