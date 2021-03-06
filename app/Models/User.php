@@ -6,9 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Validation\Rule;
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasFactory, Notifiable;
 
     /**
@@ -20,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'role_id',
     ];
 
     /**
@@ -40,4 +46,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function address(){
+        return $this->hasmany(Address::class);
+    }
+    public function delivery()
+    {
+        return $this->hasone(Delivery::class);
+    }
+    public function resturant()
+    {
+        return $this->hasone(Resturant::class);
+    }
+    public function order()
+    {
+        return $this->hasone(Order::class);
+    }
 }
