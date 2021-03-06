@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\OrderController ;
 use App\Http\Controllers\restaurant\OrderController;
 use App\Http\Controllers\Customer\RestaurantController;
 
@@ -30,7 +30,7 @@ Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
 Route::prefix('/customer')->group(function () {
-    Route::resource('retaurant', RestaurantController::class)->only(['index', 'show']);
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
