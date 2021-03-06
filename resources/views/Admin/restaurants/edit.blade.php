@@ -18,8 +18,8 @@
                 <div class="control">
                   <div class="select">
                     <select name="epayment">
-                        <option value="{{ $restaurant->epayment }}">Direct</option>
-                        <option value="{{ $restaurant->epayment }}">Visa</option>
+                            <option value="direct">Direct</option>
+                            <option value="visa">Visa</option>
                     </select>
                   </div>
                   @error('epayment')
@@ -30,13 +30,13 @@
             <div class="field">
                 <label class="label">has_delivery</label>
                 <div class="control">
-                    <div class="select">
-                        <select name="has_delivery">
-                            <option value="{{ $restaurant->has_delivery }}">Yes</option>
-                            <option value="{{ $restaurant->has_delivery }}">No</option>
-                        </select>
-                    </div>
-                    @error('has_delivery')
+                  <div class="select">
+                    <select name="has_delivery">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                    </select>
+                  </div>
+                  @error('has_delivery')
                         <p class="help is-danger">{{ $message }}</p>
                     @enderror
                 </div>
