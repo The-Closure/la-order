@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\http\Models\Order;
+use app\http\Models\meal;
 
 class OrderItem extends Model
 {

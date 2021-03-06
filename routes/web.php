@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\controller\CategoryController;
 use App\Http\Controllers\OrderControllerController;
 use App\Http\Controllers\AddressController;
+use App\Http\controller\delivery\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,26 @@ Route::get('/', function () {
 
 Route::resource('\categories',CategoryController::class);
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::prefix('/customer')->group(function () {
+    Route::resource('orders', OrderController::class)->only(['index', 'show']);
+});
+Route::prefix('/Restaurant')->group(function () {
+    Route::resource('orders', OrderController::class)->except('index');
+    Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+
+});
+Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'auth'],function(){
+    Route::get('/index',[DeliveryController::class,'my_order_items']);
+    Route::get('/show',[DeliveryController::class,'show']);
+    Route::get('/update',[DeliveryController::class,'update']);
+});
+
 
 require __DIR__.'/auth.php';
 Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');

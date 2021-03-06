@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserIdToAddressesTabel extends Migration
+class CreateDeliveriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddUserIdToAddressesTabel extends Migration
      */
     public function up()
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->foreignId("user_id")->after("id")->constrained();
+        Schema::create('deliveries', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string("vehicle");
+            $table->string("working-hours");
+            $table->string("user_id");
+
         });
     }
 
@@ -25,11 +30,6 @@ class AddUserIdToAddressesTabel extends Migration
      */
     public function down()
     {
-        Schema::table('addresses_tabel', function (Blueprint $table) {
-
-            $table->dropForeign("user_id");
-
-            $table->dropColumn("user_id");
-        });
+        Schema::dropIfExists('deliveries');
     }
 }
