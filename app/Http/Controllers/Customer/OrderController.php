@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -46,30 +48,30 @@ class OrderController extends Controller
             'customer_id'=> 'required',
 
         ]);
-        $order=Auth::user()->orders()->create(['total'  => $request->total,
-        'status' => 'pending',
-        'method'=> 'direct',
-        'rating'=> '',
-        'feedback'=> '',
-        'customer_id' => $request->customer_id,
-        'note'=> ''
+        $order=Auth::user()->order->create([
+            'total'  => 0,
+            'status' => 'pending',
+            'method'=> 'direct',
+            'rating'=> '',
+            'feedback'=> '',
+            'customer_id' => Auth::user()->id,
+            'note'=> ''
         ]);
         $orderItems = $request->items;
+        $total=0;
         foreach($orderItems as $object)
             {
-                $orderItems = $order->items()->create([
+                $meal = Meal::find($object['meal_id']);
+                $newOrderItem = $order->orderItems()->create([
                     'meal_id' => $object['meal_id'],
                     'quantite'=> $object['quantite'],
-                    'price'=> $object['price']
+                    'price'=> $meal->price,
                     ]);
-                // $object->validate([
-                //     'meal_id' => 'required',
-                //     'quantite' => 'required|min:1',
-                //     'price'=> 'required',
 
-                // ]);
+                $total += $newOrderItem->price * $newOrderItem->quantity;
+
             }
-        return view('Order.show',['order'=>$order]);
+        return view('Order.show', [ 'order' => $order ]);
     }
 
     /**

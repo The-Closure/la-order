@@ -5,9 +5,9 @@
 @section('content')
 <div class="container">
   <div class="columns is-multiline">
-    @foreach ($restaurants as $restaurant->id)
+    @foreach ($restaurants as $restaurant)
     <div class="column is-4">
-      <a href="{{ route('Admin.restaurants.show', $restaurant) }}">
+      <a href="{{ route('Admin.restaurants.show', $restaurant->id) }}">
         <div class="card">
           <div class="card-image">
             <figure class="image is-4by3">
