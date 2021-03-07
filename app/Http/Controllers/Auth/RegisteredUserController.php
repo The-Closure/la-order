@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Delivery;
 
 class RegisteredUserController extends Controller
 {
@@ -62,25 +63,23 @@ class RegisteredUserController extends Controller
         $User->email = $user->email;
         $User->password = $user->password;
         $user->assignRole($role);
+        $User_id=Auth::id();
         
         if($role==(Role::findByName('admin'))){
-            return "you are admin";
-            return redirect()->route('admin.show');
+            return redirect()->route('adminhome');
 
         }
         elseif($role==(Role::findByName('onwer'))){
-            return "you are onwer";
-            return redirect()->route('onwer.show');
+            return redirect()->route('onwerhome');
 
         }
         elseif($role==(Role::findByName('delivery'))){
-            return "you are delivery";
-            return redirect()->route('delivery.show');
+                return redirect()->route('deliverycompleteregister');
+           //   return redirect()->route('deliveryhome');
 
         }
         else{
-            return "you are costumer";
-            return redirect()->route('customer.show');
+            return redirect()->route('costumerhome');
         }
 
 

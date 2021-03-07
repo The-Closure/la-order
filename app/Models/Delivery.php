@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     use HasFactory;
+    
+    protected $fillable=['working_hours', 'vehicle', 'user_id'];
 
     public function areas()
     {
