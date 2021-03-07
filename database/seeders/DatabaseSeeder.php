@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(RoleTableSeeder::class);
-        // Restaurant::factory(10)->create();
+        $this->call(RoleTableSeeder::class);
+        Restaurant::factory(10)->create();
         Meal::factory(50)->create();
     }
 }
