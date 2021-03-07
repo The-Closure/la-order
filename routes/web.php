@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\resturant\MealController;
 use App\Http\Controllers\OrderControllerController;
+use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\controllers\delivery\DeliveryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\OrderController ;
 use App\Http\Controllers\Customer\RestaurantController;
-use App\Http\Controllers\Admin\AdminMealsController;
 use App\Http\Controllers\restaurant\OrderController as RestaurantOrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
