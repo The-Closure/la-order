@@ -7,7 +7,7 @@
   <div class="columns is-multiline">
     @foreach ($restaurants as $restaurant)
     <div class="column is-4">
-      <a href="{{ route('restaurants.show') }}">
+      <a href="{{ route('restaurants.show', $restaurant->id) }}">
         <div class="card">
           <div class="card-content">
             <div class="media">

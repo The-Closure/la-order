@@ -23,6 +23,9 @@ use App\Http\Controllers\Delivery\OrderStatusController;
 |
 */
 
+Route::get('/', [RestaurantController::class, 'index'])->name('home');
+Route::resource('restaurants', RestaurantController::class)->only('show');
+
 Route::group(['prefix' => '/customer', 'middleware' => 'auth'], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::resource('customers.addresses', AddressController::class);
@@ -33,7 +36,6 @@ Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
     Route::resource('orders', RestaurantOrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
     Route::resource('restaurantmeals', MealController::class);
-    Route::resource('orders', RestaurantController::class)->only(['index', 'show']);
 });
 
 Route::group(['prefix' => '/delivery', 'middleware' => 'auth'], function () {
@@ -55,5 +57,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::view('/', 'welcome');
 require __DIR__.'/auth.php';

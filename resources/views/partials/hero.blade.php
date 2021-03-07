@@ -18,7 +18,7 @@
             <a class="navbar-item {{ Route::currentRouteName() == 'home' ? 'is-active':'' }}" href="{{ route('home') }}">
               Home
             </a>
-            <a class="navbar-item {{ Route::currentRouteName() == 'posts.index' ? 'is-active':'' }}" href="{{ route('posts.index') }}">
+            {{-- <a class="navbar-item {{ Route::currentRouteName() == 'posts.index' ? 'is-active':'' }}" href="{{ route('posts.index') }}">
               Blog Posts
             </a>
             <a class="navbar-item {{ Route::currentRouteName() == 'posts.create' ? 'is-active':'' }}" href="{{ route('posts.create') }}">
@@ -29,7 +29,7 @@
             </a>
             <a class="navbar-item {{ Route::currentRouteName() == 'contact' ? 'is-active':'' }}" href="{{ route('contact') }}">
               Contact
-            </a>
+            </a> --}}
             @if (Auth::guest())
               <a class="navbar-item " href="{{ route('login') }}">Login</a>
               <a class="navbar-item " href="{{ route('register') }}">Register</a>

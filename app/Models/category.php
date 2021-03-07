@@ -14,6 +14,6 @@ class Category extends Model
      */
     public function meals()
     {
-        return $this->hasMany(Meals::class);
+        return $this->hasMany(Meal::class);
     }
 }

@@ -21,13 +21,13 @@
                      The Payment Way: {{ $restaurants->epayment }}
                 </p>
             </div>
-                <a href="{{ route('meals.index') }}">
+                <a href="{{ route('meals.index') }}">Hi check meals</a>
             <div class="card-footer">
                 <div class="content pt-5">
                     <div class="categories">
-                        @foreach ( $restaurants->categories as $categories )
-                        <span class="category is-primary">{{ $categories->name }}</span>
-                            @endforeach
+                        @foreach ( $restaurants->meals as $meal )
+                            <span class="category is-primary">{{ $meal->name }}</span>
+                        @endforeach
             </div>
         </div>
     </div>

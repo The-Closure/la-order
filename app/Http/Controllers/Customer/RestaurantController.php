@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -18,7 +18,7 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = Restaurant::all();
-        return view("restaurants.index",["restaurants" =>$restaurants]);
+        return view('restaurants.index', ['restaurants' => $restaurants]);
     }
 
     /**
@@ -52,7 +52,7 @@ class RestaurantController extends Controller
     {
        $restaurants=Restaurant::find($restaurant_id);
 
-       $categories=category::whereHas("meal",function(Builder $query)use($restaurant_id){
+       $categories=Category::whereHas("meals",function(Builder $query)use($restaurant_id){
         $query->where("restaurant_id",$restaurant_id);})->get();
 
        return view("restaurants.show",["restaurants"=>$restaurants,"categories"=>$categories]);
