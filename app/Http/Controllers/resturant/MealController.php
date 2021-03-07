@@ -13,13 +13,13 @@ class MealController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responspe
      */
     public function index()
     {
-        $meals = Meal::all();
+        $meals = Auth::user()->restaurant->meals;
 
-        return view('meals.index', ['meals' => $meals]);
+        return view('restaurantmeals.index', ['meals' => $meals]);
     }
 
     /**
@@ -31,7 +31,7 @@ class MealController extends Controller
     {
         $categories = Category::all();
 
-        return view('meals.create', ['categories' => $categories]);
+        return view('restaurantmeals.create', ['categories' => $categories]);
     }
 
     /**
@@ -59,7 +59,7 @@ class MealController extends Controller
     $meal->name = $request->name;
     $file = $request->file('featured');
 
-        $url = '/storage/meals/'  . $file->extension();
+        $url = '/storage/restauratmeals/'  . $file->extension();
         Image::make($file)
             ->resize(600, 500)
             ->save(public_path($url));
@@ -68,10 +68,10 @@ class MealController extends Controller
         if($meal->save()) {
             request()->session()->flash('success', 'Meals was created successfully.');
         } else {
-            request()->session()->flash('danger', 'Something went wrong.');
+            request()->session()->flash('error', 'Something went wrong.');
         }
 
-        return redirect()->route('meals.show');
+        return redirect()->route('restaurantmeals.show');
         }
     /**
      * Display the specified resource.
@@ -82,7 +82,7 @@ class MealController extends Controller
     public function show($id)
     {
         $meal = Meal::where($id);
-        return view('meals.show', ['meal' => $meal]);
+        return view('restaurantmeals.show', ['meal' => $meal]);
     }
 
     /**
@@ -96,7 +96,7 @@ class MealController extends Controller
         $meal = Meal::find($id);
         $categories = Category::all();
 
-        return view('meals.edit', [
+        return view('restaurantmeals.edit', [
             'meal' => $meal,
             'categories' => $categories,
         ]);
@@ -121,14 +121,14 @@ class MealController extends Controller
         ]);
 
         $meal = Meal::find($id);
-    $meal->name = $request->name;
-    $meal->desc = $request->desc;
-    $meal->status = $request->status;
-    $meal->catigory_id = $request->catigory_id;
-    $meal->name = $request->name;
-    $file = $request->file('featured');
+        $meal->name = $request->name;
+        $meal->desc = $request->desc;
+        $meal->status = $request->status;
+        $meal->catigory_id = $request->catigory_id;
+        $meal->name = $request->name;
+        $file = $request->file('featured');
 
-        $url = '/storage/meals/'  . $file->extension();
+        $url = '/storage/restaurantmeals/'  . $file->extension();
         Image::make($file)
             ->resize(600, 500)
             ->save(public_path($url));
@@ -140,7 +140,7 @@ class MealController extends Controller
             request()->session()->flash('danger', 'Something went wrong.');
         }
 
-        return redirect()->route('meals.show');
+        return redirect()->route('restaurantmeals.show');
     }
 
     /**
@@ -155,6 +155,6 @@ class MealController extends Controller
 
         request()->session()->flash('danger', 'meal was Deleted successfully.');
 
-        return redirect()->route('meals.index');
+        return redirect()->route('restaurantmeals.index');
     }
 }

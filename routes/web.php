@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\resturant\MealController;
 
 
 /*
@@ -26,11 +27,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::prefix('/customer')->group(function () {
-    Route::resource('orders', OrderController::class)->only(['index', 'show']);
+    // Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
-Route::prefix('/Restaurant')->group(function () {
-    Route::resource('orders', OrderController::class)->except('index');
-    Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+Route::prefix('/restaurant')->group(function () {
+    // Route::resource('orders', OrderController::class)->except('index');
+    // Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+    Route::resource('restaurantmeals', MealController::class);
 
 });
 
