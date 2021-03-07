@@ -9,8 +9,8 @@
                 <img src="{{ $restaurants->logo }}" alt="{{ $restaurants->name }}">
             </div>
             <div class="column is-6">
-                <h3 class="title is-3">{{ $restaurants->phone}}</h3>
-                <h3 class="subtitle is-5">{{ $restaurants->has_delivery}}</h3>
+                <h3 class="title is-5">{{ $restaurants->phone}}</h3>
+                <h3 class="subtitle is-3">{{ $restaurants->has_delivery}}</h3>
                 <div class="content">
                     {{ $restaurants->working_hours}}
                 </div>
@@ -20,6 +20,7 @@
                 <p class="content">
                      The Payment Way: {{ $restaurants->epayment }}
                 </p>
+            </div>
                 <a href="{{ route('meals.index') }}">
             <div class="card-footer">
                 <div class="content pt-5">

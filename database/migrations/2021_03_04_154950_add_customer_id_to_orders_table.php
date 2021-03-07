@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-class AddMealIdToOrderItemsTable extends Migration
+
+class AddCustomerIdToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +13,8 @@ class AddMealIdToOrderItemsTable extends Migration
      */
     public function up()
     {
-
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreignId('meal_id')->after('id')->constrained();
-
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('customer_id')->constrained();
         });
     }
 
@@ -26,10 +25,9 @@ class AddMealIdToOrderItemsTable extends Migration
      */
     public function down()
     {
-
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->dropForeign('meal_id');
-            $table->dropColumn('meal_id');
+        Schema::table('orders', function (Blueprint $table) {
+        $table->dropFoeign('customer_id');
+        $table->dropColumn('customer_id');
         });
     }
 }

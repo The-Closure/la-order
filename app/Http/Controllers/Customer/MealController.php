@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Meal;
 
-class AdminMealsController extends Controller
+class MealController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($rest_id, $cat_id)
     {
-        //
+        $meals = Meal::where('restaurant_id', $rest_id)->where('category_id', $cat_id)->get();
+        return view('meals.index', ['meals' => $meals]);
     }
 
     /**
@@ -35,10 +37,7 @@ class AdminMealsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'name'             => 'required|string|min:2|max:255',
-        'description'      => 'required|string|min:15',
-        ]);
+        //
     }
 
     /**
