@@ -1,14 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\controller\CategoryController;
 use App\Http\Controllers\OrderControllerController;
 use App\Http\controllers\delivery\DeliveryController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Customer\OrderController ;
-use App\Http\Controllers\restaurant\OrderController;
-use App\Http\Controllers\Customer\RestaurantController;
-
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
@@ -37,7 +32,7 @@ Route::get('/dashboard', function () {
 Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
-Route::prefix('/Restaurant')->group(function () {
+
 Route::prefix('/customer')->group(function () {
     Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });

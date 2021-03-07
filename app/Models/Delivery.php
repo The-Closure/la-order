@@ -9,11 +9,11 @@ class Delivery extends Model
 {
     use HasFactory;
 
-    public function area()
+    public function areas()
     {
-        return $this->hasMany(Area::class);
+        return $this->belongsToMany(Area::class);
     }
-   
+
     public function user()
     {
         return $this->hasone(User::class);
