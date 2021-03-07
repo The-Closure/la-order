@@ -10,19 +10,19 @@ class Address extends Model
 {
     use HasFactory;
 
-protected $fillable=["city","street","area_id","user_id","details"];
+    protected $fillable=["city","street","area_id","user_id","details"];
 
- //Get the area that owns the address.
+    //Get the area that owns the address.
 
     public function area()
     {
         return $this->belongsTo(Area::class);
     }
 
- // Get the user that owns the address.
+    // Get the user that owns the address.
 
-public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

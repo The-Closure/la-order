@@ -11,7 +11,6 @@ class Restaurant extends Model
 
     protected $fillable = ['name', 'phone','logo','has_delivery','working_hours','rating','epayment'];
 
-
     /**
      * Get the user that owns the phone.
      */
@@ -27,5 +26,4 @@ class Restaurant extends Model
     {
         return $this->hasMany(Meal::class);
     }
-
 }

@@ -18,6 +18,6 @@ class Delivery extends Model
 
     public function user()
     {
-        return $this->hasone(User::class);
+        return $this->belongsTo(User::class);
     }
 }

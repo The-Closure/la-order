@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    
     /**
      * Get the orderitems for the order.
      */
@@ -15,11 +16,12 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-     /**
+
+    /**
      * Get the user that owns the order.
      */
     public function user()
     {
-        return $this->belongsTo(User::class,'customer_id');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 }

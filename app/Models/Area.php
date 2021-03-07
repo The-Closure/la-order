@@ -9,21 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model
 {
- use HasFactory;
- protected $fillable=["name"];
+    use HasFactory;
+    
+    protected $fillable = ["name"];
 
-
- //Get the address that owns the Areas.
+    //Get the address that owns the Areas.
     public function addresses()
     {
         return $this->hasmany(Address::class);
     }
 
-//Get the deliveris that owns the Areas.
+    //Get the deliveris that owns the Areas.
     public function Deliveries()
     {
         return $this->belongsTomany(Delivery::class);
     }
-
 }
 
