@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('\categories',CategoryController::class);
+Route::resource('/categories',CategoryController::class);
 
 
 
@@ -40,8 +40,8 @@ Route::prefix('/customer')->group(function () {
 Route::prefix('/customer')->group(function () {
     Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
+
 Route::prefix('/restaurant')->group(function () {
-    Route::resource('orders', OrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
     Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
@@ -57,11 +57,14 @@ Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'aut
 });
 
 Route::prefix('/admin')->group(function () {
-    Route::resource('restaurant', AdminRestaurantController::class);
+    Route::resource('/restaurant', AdminRestaurantController::class);
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('/meals', AdminMealsController::class);
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('/restaurants/{rest_id}/categories/{cat_id}', [MealController::class, 'index']);
+Route::get('/order', [OrderController::class, 'markAsDone'])->middleware('auth');
+Route::resource('/customers/addresses', AddressController::class);
+Route::resource('/customers', CustomerController::class);
 Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');
-Route::resource('/address',AddressController::class);

@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\category;
-use App\Models\Restaurant;
-use Illuminate\Database\Eloquent\Builder;
 
-class RestaurantController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::all();
-        return view("restaurants.index",["restaurants" =>$restaurants]);
+        return view('customers.index', ['customers' => $customer]);
     }
 
     /**
@@ -48,14 +44,9 @@ class RestaurantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($restaurant_id)
+    public function show($id)
     {
-       $restaurants=Restaurant::find($restaurant_id);
-
-       $categories=category::whereHas("meal",function(Builder $query)use($restaurant_id){
-        $query->where("restaurant_id",$restaurant_id);})->get();
-
-       return view("restaurants.show",["restaurants"=>$restaurants,"categories"=>$categories]);
+        return view('customers.show', ['customers' => $customer]);
     }
 
     /**
@@ -66,7 +57,9 @@ class RestaurantController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -78,7 +71,17 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+        $customer = Customer::find($id);
+
+        $customer->city = $request->email;
+        $customer->street = $request->password;
+        $customer->details = $request->phone;
+        if($customer->save()) {
+            request()->session()->flash('success', 'customer details was updated successfully.');
+        } else {
+            request()->session()->flash('danger', 'Something went wrong.');
+        }
+        return redirect()->route('customers.index');
     }
 
     /**

@@ -20,6 +20,6 @@ class Order extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class,'customer-id');
+        return $this->belongsTo(User::class,'customer_id');
     }
 }
