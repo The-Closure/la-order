@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\controller\CategoryController;
-use App\Http\Controllers\OrderControllerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderStatusController;
+
 
 /*
 |--------------------------------------------------------------------------
