@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Restaurant;
 
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
-class resturantcontroller extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -19,8 +19,6 @@ class OrderController extends Controller
     {
         $orders = Auth::user()->orders;
         return view('order.index', ['orders'=>$orders]);
-
-
     }
 
     /**
@@ -48,6 +46,7 @@ class OrderController extends Controller
             'customer_id'=> 'required',
 
         ]);
+
         $order=Auth::user()->order->create([
             'total'  => 0,
             'status' => 'pending',
@@ -57,6 +56,7 @@ class OrderController extends Controller
             'customer_id' => Auth::user()->id,
             'note'=> ''
         ]);
+
         $orderItems = $request->items;
         $total=0;
         foreach($orderItems as $object)
@@ -77,21 +77,21 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer\OrderController  $orderController
+     * @param  \App\Models\Customer\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderController $orderController)
+    public function show(Order $order)
     {
-            return view('order.show',['order'=>$orderController]);
+        return view('order.show',['order'=>$order]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Customer\OrderController  $orderController
+     * @param  \App\Models\Customer\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(OrderController $orderController)
+    public function edit(Order $order)
     {
         //
     }
@@ -100,10 +100,10 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer\OrderController  $orderController
+     * @param  \App\Models\Customer\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OrderController $orderController)
+    public function update(Request $request, Order $order)
     {
         //
     }
@@ -111,10 +111,10 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Customer\OrderController  $orderController
+     * @param  \App\Models\Customer\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderController $orderController)
+    public function destroy(Order $order)
     {
         //
     }

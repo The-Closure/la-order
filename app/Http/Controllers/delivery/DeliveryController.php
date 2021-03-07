@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\delivery;
+namespace App\Http\Controllers\Delivery;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Delivery;
 
-class deliverycontroller extends Controller
+class DeliveryController extends Controller
 {
     /**
      * Display a listing of the resource.

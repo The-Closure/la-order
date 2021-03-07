@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Delivary;
+namespace App\Http\Controllers\Delivery;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class OrderStatuscontroller extends Controller
+class OrderStatusController extends Controller
 {
     public function markAsDone($id)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\restaurant;
+namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;

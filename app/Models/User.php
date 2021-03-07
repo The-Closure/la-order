@@ -53,7 +53,7 @@ class User extends Authenticatable
     {
         return $this->hasone(Delivery::class);
     }
-    public function resturant()
+    public function Restaurant()
     {
         return $this->hasone(Resturant::class);
     }
