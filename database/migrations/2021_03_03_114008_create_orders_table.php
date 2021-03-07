@@ -15,14 +15,14 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id');
-            $table->foreignId('delivery_id');
-            $table->float('total', 8 , 2);
+            $table->integer('total');
             $table->string('status');
             $table->text('note');
             $table->integer('rating');
             $table->text('feedback');
             $table->string('method');
+            $table->foreignId('customer_id');
+            $table->foreignId('delivery_id');
             $table->timestamps();
 
         });

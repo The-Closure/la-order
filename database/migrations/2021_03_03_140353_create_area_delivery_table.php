@@ -13,7 +13,7 @@ class CreateAreaDeliveryTable extends Migration
      */
     public function up()
     {
-        Schema::create('area__delivery', function (Blueprint $table) {
+        Schema::create('area_delivery', function (Blueprint $table) {
             $table->foreignId("area_id");
             $table->foreignId("delivery_id");
         });
@@ -26,6 +26,6 @@ class CreateAreaDeliveryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('area__delivery');
+        Schema::dropIfExists('area_delivery');
     }
 }

@@ -18,6 +18,7 @@ class CreateAddressesTable extends Migration
             $table->string("city");
             $table->string("street");
             $table->text("details");
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
