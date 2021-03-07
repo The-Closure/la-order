@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\MealController;
 use App\Http\controller\CategoryController;
 use App\Http\Controllers\OrderControllerController;
 use App\Http\controllers\delivery\DeliveryController;
@@ -10,6 +12,8 @@ use App\Http\Controllers\restaurant\OrderController;
 use App\Http\Controllers\Customer\RestaurantController;
 
 use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\restaurant\OrderController as RestaurantOrderController;
+use App\Http\Controllers\Customer\RestaurantController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +48,11 @@ Route::prefix('/customer')->group(function () {
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
+});
+Route::prefix('/restaurant')->group(function () {
+    Route::resource('orders', RestaurantOrderController::class)->except('index');
+    Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
 
 });
 Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'auth'],function(){
@@ -57,5 +66,7 @@ Route::prefix('/admin')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/restaurants/{rest_id}/categories/{cat_id}', [MealController::class, 'index']);
 Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');
 Route::resource('/address',AddressController::class);
