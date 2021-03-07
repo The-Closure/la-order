@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Validation\Rule;
 class User extends Authenticatable
 {
-     
+
     use HasFactory, Notifiable, HasRoles;
 
     /**
