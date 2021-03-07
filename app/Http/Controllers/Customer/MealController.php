@@ -1,29 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\restaurant;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderItem;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Models\Meal;
 
-class OrderController extends Controller
+class MealController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($restaurant_id)
+    public function index($rest_id, $cat_id)
     {
-        $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
-                $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
-                    $q->where('restaurant_id', $restaurant_id);
-                });
-        })->paginate(10);
-
-        return view('owner.order.index', ['orders' => $orders]);
+        $meals = Meal::where('restaurant_id', $rest_id)->where('category_id', $cat_id)->get();
+        return view('meals.index', ['meals' => $meals]);
     }
 
     /**
@@ -55,12 +48,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        $orderitems=$order->OrderItem;
-
-
-        return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
-
+        //
     }
 
     /**
@@ -71,7 +59,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -83,13 +71,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required|string'
-        ]);
-        $order=Order::find($id);
-        $order->status=$request->status;
-        $order->save();
-        return view('owner.order.show',['order' => $order]);
+        //
     }
 
     /**

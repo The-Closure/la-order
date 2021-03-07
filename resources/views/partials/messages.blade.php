@@ -4,13 +4,13 @@
         {{ Session::get('success') }}
       </div>
     @endif
-
+    
     @if (Session::has('warning'))
       <div class="notification is-warning">
         {{ Session::get('warning') }}
       </div>
     @endif
-
+    
     @if (Session::has('danger'))
       <div class="notification is-danger">
         {{ Session::get('danger') }}

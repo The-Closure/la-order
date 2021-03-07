@@ -1,29 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\restaurant;
+namespace App\Http\Controllers\Address;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderItem;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($restaurant_id)
+    public function index()
     {
-        $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
-                $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
-                    $q->where('restaurant_id', $restaurant_id);
-                });
-        })->paginate(10);
-
-        return view('owner.order.index', ['orders' => $orders]);
+        $address=Auth::user()->address;
+        return view('address.index', ['address' => $address]);
     }
 
     /**
@@ -55,12 +47,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        $orderitems=$order->OrderItem;
-
-
-        return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
-
+        $address=Auth::user()->address;
+        return view('address.show', ['address' => $address]);
     }
 
     /**
@@ -71,7 +59,10 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $address=Auth::user()->address;
+        $address = Address::find($id);
 
+        return view('address.edit', ['address' => $address]);
     }
 
     /**
@@ -83,13 +74,18 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required|string'
-        ]);
-        $order=Order::find($id);
-        $order->status=$request->status;
-        $order->save();
-        return view('owner.order.show',['order' => $order]);
+        $address = Address::find($id);
+
+        $address->city = $request->city;
+        $address->street = $request->street;
+        $address->details = $request->details;
+        if($address->save()) {
+            request()->session()->flash('success', 'address was updated successfully.');
+        } else {
+            request()->session()->flash('danger', 'Something went wrong.');
+        }
+        return redirect()->route('address.index');
+
     }
 
     /**
@@ -100,6 +96,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

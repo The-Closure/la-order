@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\resturant\MealController;
-
-
+use App\Http\Controllers\OrderControllerController;
+use App\Http\controllers\delivery\DeliveryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Customer\OrderController ;
+use App\Http\Controllers\Customer\RestaurantController;
+use App\Http\Controllers\Admin\AdminMealsController;
+use App\Http\Controllers\restaurant\OrderController as RestaurantOrderController;
+use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('/categories',CategoryController::class);
 
 
 
@@ -27,13 +34,22 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::prefix('/customer')->group(function () {
-    // Route::resource('orders', OrderController::class)->only(['index', 'show']);
+    Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
 Route::prefix('/restaurant')->group(function () {
-    // Route::resource('orders', OrderController::class)->except('index');
-    // Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
+    Route::resource('orders', OrderController::class)->except('index');
+    Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
     Route::resource('restaurantmeals', MealController::class);
-
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('/restaurant', AdminRestaurantController::class);
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('/meals', AdminMealsController::class);
 });
 
 require __DIR__.'/auth.php';
+Route::get('/order', [OrderController::class, 'markAsDone'])->middleware('auth');
+Route::resource('/customers/addresses', AddressController::class);
+Route::resource('/customers', CustomerController::class);
+Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');
