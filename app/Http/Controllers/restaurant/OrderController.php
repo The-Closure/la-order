@@ -23,8 +23,7 @@ class OrderController extends Controller
                 });
         })->paginate(10);
 
-        // return view('order.index', ['orders' => $Orders]);
-        return $orders;
+        return view('owner.order.index', ['orders' => $Orders]);
     }
 
     /**
@@ -57,16 +56,11 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        $order->status=['preparing','delivering','rejected'];
-        $orderitems = OrderItem::all();
+        $orderitems=$Order->OrderItem;
 
 
-        return view('order.show',
-        ['order' => $order ,
-          'orderitems' => $orderitems ,
-          'order_status'=> $order->status
-        ]);
-    }
+        return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
+
     }
 
     /**
@@ -89,7 +83,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $request->validate([
+            'status' => 'required|string';
+        ]);
+        $order=Order::find($id);
+        $order->status=$request->status;
+        $order->save();
+        return view('owner.order.show',['order' => $order]);
     }
 
     /**
