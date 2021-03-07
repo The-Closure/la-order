@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\controller\CategoryController;
 use App\Http\Controllers\OrderControllerController;
-use App\Http\Controllers\AddressController;
-use App\Http\controller\delivery\DeliveryController;
+use App\Http\controllers\delivery\DeliveryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Customer\OrderController ;
+use App\Http\Controllers\restaurant\OrderController;
+use App\Http\Controllers\Customer\RestaurantController;
 
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
@@ -35,6 +38,10 @@ Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
 Route::prefix('/Restaurant')->group(function () {
+Route::prefix('/customer')->group(function () {
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
+});
+Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
 
