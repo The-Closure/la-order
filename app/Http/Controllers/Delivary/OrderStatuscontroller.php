@@ -12,6 +12,6 @@ class OrderStatuscontroller extends Controller
         $order=Order::findOrfail($id);
         $order->status='Done';
         $order->save();
-        return redirect('/order-history/{order}')->withMessage('Order was Done');
+        return redirect()->route('orders.index')->withMessage('Order was Done');
     }
 }
