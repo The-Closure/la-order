@@ -7,7 +7,7 @@
             <div class="field">
                 <label class="label">name</label>
                 <div class="control">
-                    <input class="input {{ $errors->has('name') ? 'is-danger':'' }}" type="text" name="name" placeholder="Restaurant name ..." value="{{ old('name') ?? $post->name }}">
+                    <input class="input {{ $errors->has('name') ? 'is-danger':'' }}" type="text" name="name" placeholder="Restaurant name ..." value="{{ old('name') ?? $restaurant->name }}">
                     @error('name')
                         <p class="help is-danger">{{ $message }}</p>
                     @enderror

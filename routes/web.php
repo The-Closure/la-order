@@ -2,14 +2,14 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Customer\MealController;
-use App\Http\controller\CategoryController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\AddressController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\OrderStatusController;
-
-
+use App\Http\Controllers\OrderControllerController;
+use App\Http\controllers\delivery\DeliveryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Customer\OrderController ;
+use App\Http\Controllers\Customer\RestaurantController;
+use App\Http\Controllers\Admin\AdminMealsController;
+use App\Http\Controllers\restaurant\OrderController as RestaurantOrderController;
+use App\Http\Controllers\Admin\AdminRestaurantController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +38,7 @@ Route::prefix('/customer')->group(function () {
 });
 
 Route::prefix('/customer')->group(function () {
-    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show'])->name("home");
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
 
 Route::prefix('/restaurant')->group(function () {
@@ -57,7 +57,10 @@ Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'aut
 });
 
 Route::prefix('/admin')->group(function () {
-    Route::resource('restaurant', AdminRestaurantController::class);
+    Route::resource('/restaurant', AdminRestaurantController::class);
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('/meals', AdminMealsController::class);
 });
 
 require __DIR__.'/auth.php';
