@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use HasFactory;
     /**
      * Get the orderitems for the order.
      */
@@ -19,7 +20,6 @@ class Order extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'customer-id');
     }
-    use HasFactory;
 }
