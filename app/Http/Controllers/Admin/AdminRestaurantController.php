@@ -96,8 +96,8 @@ class AdminRestaurantController extends Controller
             'rating' => 'required',
             'epayment' => 'required|string'->default('direct')
         ]);
-        $restaurant->update($request->only(['name', 'phone','logo','has_delivery','working_hours','rating','epayment']));
-        return view("Admin.Restaurants.show",["restaurant"=>$restaurant]);
+        $restaurant=$restaurant->update($request->only(['name', 'phone','logo','has_delivery','working_hours','rating','epayment']));
+        return redirect()->route("Admin.Restaurants.show",["restaurant"=>$restaurant]);
     }
 
     /**
@@ -109,5 +109,6 @@ class AdminRestaurantController extends Controller
     public function destroy($id)
     {
         restaurant::destroy($id);
+        return redirect()->route("Admin.Restaurants.index");
     }
 }

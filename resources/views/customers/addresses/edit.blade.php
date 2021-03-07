@@ -48,7 +48,7 @@
 
             <div class="field">
                 <div class="control">
-                  <button class="button is-link">Modify Post</button>
+                  <button class="button is-link">Modify Address</button>
                 </div>
               </div>
         </form>

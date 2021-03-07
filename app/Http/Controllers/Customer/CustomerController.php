@@ -1,29 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\restaurant;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderItem;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($restaurant_id)
+    public function index()
     {
-        $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
-                $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
-                    $q->where('restaurant_id', $restaurant_id);
-                });
-        })->paginate(10);
-
-        return view('owner.order.index', ['orders' => $orders]);
+        return view('customers.index', ['customers' => $customer]);
     }
 
     /**
@@ -55,12 +46,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        $orderitems=$order->OrderItem;
-
-
-        return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
-
+        return view('customers.show', ['customers' => $customer]);
     }
 
     /**
@@ -71,7 +57,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $customer = Customer::find($id);
 
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -83,13 +71,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required|string'
-        ]);
-        $order=Order::find($id);
-        $order->status=$request->status;
-        $order->save();
-        return view('owner.order.show',['order' => $order]);
+        $customer = Customer::find($id);
+
+        $customer->city = $request->email;
+        $customer->street = $request->password;
+        $customer->details = $request->phone;
+        if($customer->save()) {
+            request()->session()->flash('success', 'customer details was updated successfully.');
+        } else {
+            request()->session()->flash('danger', 'Something went wrong.');
+        }
+        return redirect()->route('customers.index');
     }
 
     /**

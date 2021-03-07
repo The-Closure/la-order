@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\controller\CategoryController;
+use App\Http\Controllers\resturant\MealController;
 use App\Http\Controllers\OrderControllerController;
+use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\controllers\delivery\DeliveryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\OrderController ;
-use App\Http\Controllers\restaurant\OrderController;
 use App\Http\Controllers\Customer\RestaurantController;
-
-use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\restaurant\OrderController as RestaurantOrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 use App\Http\Controllers\Delivery\DeliveryController;
 
@@ -28,7 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('\categories',CategoryController::class);
+Route::resource('/categories',CategoryController::class);
 
 
 
@@ -39,10 +39,6 @@ Route::get('/dashboard', function () {
 
 Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
-});
-Route::prefix('/Restaurant')->group(function () {
-Route::prefix('/customer')->group(function () {
-    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
@@ -56,12 +52,18 @@ Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'aut
     Route::get('/update',[DeliveryController::class,'update']);
     Route::view('/deliverycompleteregister', 'delivery.deliverycompleteregister');
     Route::post('/deliverycompleteregister', [DeliveryController::class,'store'])->name('deliverycompleteregister');
+    Route::resource('restaurantmeals', MealController::class);
 });
-
 Route::prefix('/admin')->group(function () {
-    Route::resource('restaurant', AdminRestaurantController::class);
+    Route::resource('/restaurant', AdminRestaurantController::class);
+});
+Route::prefix('/admin')->group(function () {
+    Route::resource('/meals', AdminMealsController::class);
 });
 
 require __DIR__.'/auth.php';
+Route::get('/order', [OrderController::class, 'markAsDone'])->middleware('auth');
+Route::resource('/customers/addresses', AddressController::class);
+Route::resource('/customers', CustomerController::class);
 Route::get('/order/{id}/done', [OrderController::class, 'markAsDone'])->middleware('auth');
 Route::resource('/address',AddressController::class);
