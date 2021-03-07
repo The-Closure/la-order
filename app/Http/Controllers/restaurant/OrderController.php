@@ -23,7 +23,7 @@ class OrderController extends Controller
                 });
         })->paginate(10);
 
-        return view('owner.order.index', ['orders' => $Orders]);
+        return view('owner.order.index', ['orders' => $orders]);
     }
 
     /**
@@ -56,7 +56,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        $orderitems=$Order->OrderItem;
+        $orderitems=$order->OrderItem;
 
 
         return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
@@ -84,7 +84,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|string';
+            'status' => 'required|string'
         ]);
         $order=Order::find($id);
         $order->status=$request->status;
