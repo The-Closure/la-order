@@ -37,9 +37,9 @@ Route::get('/dashboard', function () {
 Route::prefix('/customer')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
 });
-Route::prefix('/Restaurant')->group(function () {
+
 Route::prefix('/customer')->group(function () {
-    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show'])->name("home"]);
 });
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
