@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Meal;
 class AdminMealsController extends Controller
 {
     /**
@@ -39,7 +39,7 @@ class AdminMealsController extends Controller
             'name'             => 'required|string|min:4|max:255',
             'desc'           => 'required|min:11',
             'featured'    => 'required|active_url',
-            'status' => 'required'->default('available'),
+            'status' => 'required',
             'price' => 'required|numeric',
             'restaurant_id' => 'required',
             'category_id'=> 'required'
@@ -86,13 +86,13 @@ class AdminMealsController extends Controller
             'name'             => 'required|string|min:4|max:255',
             'desc'           => 'required|min:11',
             'featured'    => 'required|active_url',
-            'status' => 'required'->default('available'),
+            'status' => 'required',
             'working_hours' => 'required|numeric',
             'price' => 'required|numeric',
             'restaurant_id' => 'required',
             'category_id'=> 'required'
         ]);
-        $meal=$meal->update($request->only(['name','desc','status','featured','price','restaurant_id','category_id']));
+        $meal=$request->update($request->only(['name','desc','status','featured','price','restaurant_id','category_id']));
         return view("Admin.meals.show",["meal"=>$meal]);
     }
 
