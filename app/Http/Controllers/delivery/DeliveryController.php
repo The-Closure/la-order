@@ -39,13 +39,16 @@ class deliverycontroller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'working-hours'   => 'required|string|min:2|max:255',
-            'vehicle'         => 'required|string|min:15',
+            'working_hours'   => 'required',
+            'vehicle'         => 'required|string|min:2',
         ]);
-        $userId = Auth::id();
-        $delivery = Delivery::create($request->only(['working-hours', 'vehicle']));
-        $delivery->user_id=$userId;
-        return redirect()->route('delviery.show');
+        $userId = \Auth::id();
+        $delivery = Delivery::create([
+            'working_hours'   => $request->working_hours,
+            'vehicle'         => $request->vehicle,
+            'user_id'         => $userId,
+            ]);
+        return redirect()->route('delvieryshow', $delivery->id);
     }
 
     /**
@@ -56,18 +59,18 @@ class deliverycontroller extends Controller
      */
     public function show($id)
     {
-        $user=Auth::user();
-        $userId = Auth::id();
-        $delivery=Delivery::where('user_id',$userId);
+        $user=\Auth::user();
+        $userId = \Auth::id();
+        $delivery=Delivery::where('user_id',$userId)->first() ;
         return view('delivery.show', ['user' => $user, 'delivery' => $delivery]);
         
         
     }
     public function my_order_items($id){
         
-        $userId = Auth::id();
+        $userId = \Auth::id();
         $delivery=Delivery::where('user_id',$userId);
-        $user = Auth::user();
+        $user = \Auth::user();
         // $orders = $user->deliveryOrders;
         // $delivery_id=$delivery->id;
         $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["preaper"]);

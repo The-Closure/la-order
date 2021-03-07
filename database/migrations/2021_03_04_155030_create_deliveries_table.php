@@ -17,7 +17,7 @@ class CreateDeliveriesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string("vehicle");
-            $table->string("working-hours");
+            $table->string("working_hours");
             $table->string("user_id");
 
         });

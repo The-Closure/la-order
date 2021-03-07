@@ -11,6 +11,8 @@ use App\Http\Controllers\Customer\RestaurantController;
 
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
+use App\Http\Controllers\Delivery\DeliveryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +32,7 @@ Route::resource('\categories',CategoryController::class);
 
 
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -44,12 +47,15 @@ Route::prefix('/customer')->group(function () {
 Route::prefix('/restaurant')->group(function () {
     Route::resource('orders', OrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [OrderController::class, 'index']);
-
+    
 });
 Route::group(['prefix'=>'delivery','namespace'=>'delivery', 'middleware' => 'auth'],function(){
     Route::get('/index',[DeliveryController::class,'my_order_items']);
-    Route::get('/show',[DeliveryController::class,'show']);
+    Route::post('/store',[DeliveryController::class,'store'])->name('delvierystore');
+    Route::get('/show/{id}',[DeliveryController::class,'show'])->name('delvieryshow');
     Route::get('/update',[DeliveryController::class,'update']);
+    Route::view('/deliverycompleteregister', 'delivery.deliverycompleteregister');
+    Route::post('/deliverycompleteregister', [DeliveryController::class,'store'])->name('deliverycompleteregister');
 });
 
 Route::prefix('/admin')->group(function () {
