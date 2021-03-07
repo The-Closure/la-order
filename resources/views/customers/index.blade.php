@@ -12,10 +12,10 @@
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-4">{{ $address->name }}</p>
-                <p class="subtitle is-6">{{ $address->email }}</p>
-                <p class="subtitle is-6">{{ $address->password }}</p>
-                <p class="subtitle is-6">{{ $address->phone }}</p>
+                <p class="title is-4">{{ $customer->name }}</p>
+                <p class="subtitle is-6">{{ $customer->email }}</p>
+                <p class="subtitle is-6">{{ $customer->password }}</p>
+                <p class="subtitle is-6">{{ $customer->phone }}</p>
               </div>
             </div>
           </div>

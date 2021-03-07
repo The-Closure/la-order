@@ -8,7 +8,6 @@
     @foreach ($addresses as $address)
     <div class="column is-4">
       <a href="{{ route('addresses.show', $address->id) }}">
-        
           <div class="card-content">
             <div class="media">
               <div class="media-content">
@@ -16,6 +15,9 @@
                 <p class="subtitle is-6">{{ $address->area }}</p>
                 <p class="subtitle is-6">{{ $address->street }}</p>
                 <p class="subtitle is-6">{{ $address->details }}</p>
+                <p class="subtitle is-6">{{ $address->street }}</p>
+                <p class="subtitle is-6">{{ $address->details }}</p>
+                
               </div>
             </div>
           </div>
