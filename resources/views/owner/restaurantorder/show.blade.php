@@ -1,4 +1,4 @@
-            @extends('layouts.app')
+            @extends('layouts.app1')
 
             @section('title', $order->id)
 
@@ -47,12 +47,3 @@
 
 
 
-    <h3 class="title is-3">{{ $order->order_item-> }}</h3>
-    <h3 class="title is-3">{{ $post->}}</h3>
-    <h3 class="subtitle is-5">{{ $post->category->name }}</h3>
-    <div class="content">
-        {{ $post->content }}
-    </div>
-    <p class="content">
-        posted at: {{ $post->created_at }}
-    </p>
