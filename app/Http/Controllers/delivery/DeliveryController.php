@@ -61,7 +61,7 @@ class DeliveryController extends Controller
     {
         $user=\Auth::user();
         $userId = \Auth::id();
-        $delivery=Delivery::where('user_id',$userId)->first() ;
+        $delivery=Delivery::where('user_id',$userId)->first();
         return view('delivery.show', ['user' => $user, 'delivery' => $delivery]);
         
         
@@ -74,7 +74,7 @@ class DeliveryController extends Controller
         // $orders = $user->deliveryOrders;
         // $delivery_id=$delivery->id;
         $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["preaper"]);
-        return view('order.show', ['orders' => $orders,]);
+        return view('delivery.showorder', ['orders' => $orders,]);
     }
 
     /**
@@ -85,7 +85,11 @@ class DeliveryController extends Controller
      */
     public function edit($id)
     {
-        return view('order.show', ['orders' => $orders,]);
+        $userId = \Auth::id();
+        $delivery=Delivery::find($id)->first();
+    
+        return view('delivery.edit', $delivery->id);
+        //return view('order.show', ['orders' => $orders,]);
     }
 
     /**
@@ -95,18 +99,19 @@ class DeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Delivery $delivery)
     {
         $request->validate([
-            'working-hours'   => 'required|string|min:2|max:255',
-            'vehicle'         => 'required|string|min:15',
+            'working-hours'   => 'required',
+            'vehicle'         => 'required',
         ]);
+        $userId = \Auth::id();
         $delivery = Delivery::update($request->only(['working-hours', 'vehicle']));
         if ($delivery)
             request()->session()->flash('success', 'Category was created successfully.');
         else
             request()->session()->flash('danger', 'Something went wrong.');
-            return redirect()->route('delviery.show');
+            return redirect()->route('delivery.show',['delivery'=> $delivery]);
     }
 
     /**

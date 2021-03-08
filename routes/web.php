@@ -39,9 +39,10 @@ Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => '/delivery', 'middleware' => 'auth'], function () {
-    Route::get('/index',[DeliveryController::class,'my_order_items']);
+    Route::get('/showorder',[DeliveryController::class,'my_order_items']);
     Route::post('/store',[DeliveryController::class,'store'])->name('delvierystore');
     Route::get('/show/{id}',[DeliveryController::class,'show'])->name('delvieryshow');
+    Route::get('/edit/{id}',[DeliveryController::class,'edit'])->name('deliveryedit');
     Route::get('/update',[DeliveryController::class,'update']);
     Route::view('/deliverycompleteregister', 'delivery.deliverycompleteregister');
     Route::post('/deliverycompleteregister', [DeliveryController::class,'store'])->name('deliverycompleteregister');

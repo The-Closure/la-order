@@ -70,7 +70,7 @@ class RegisteredUserController extends Controller
 
         }
         elseif($role==(Role::findByName('onwer'))){
-            return redirect()->route('onwerhome');
+            return redirect()->route('restaurantmeals.index');
 
         }
         elseif($role==(Role::findByName('delivery'))){
@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
 
         }
         else{
-            return redirect()->route('costumerhome');
+            return redirect()->route('customers.show');
         }
 
 
