@@ -72,9 +72,9 @@ class DeliveryController extends Controller
         $delivery=Delivery::where('user_id',$userId);
         $user = \Auth::user();
         // $orders = $user->deliveryOrders;
-        // $delivery_id=$delivery->id;
-        $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["preaper"]);
-        return view('delivery.showorder', ['orders' => $orders,]);
+        $delivery_id=$delivery->id;
+        $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["prepear"]);
+        return view('delivery.showorder', ['orders' => $orders]);
     }
 
     /**
@@ -88,7 +88,7 @@ class DeliveryController extends Controller
         $userId = \Auth::id();
         $delivery=Delivery::find($id)->first();
     
-        return view('delivery.edit', $delivery->id);
+        return view('delivery.edit', $delivery);
         //return view('order.show', ['orders' => $orders,]);
     }
 
