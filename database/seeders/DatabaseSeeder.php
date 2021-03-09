@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Meal;
 use App\Models\Restaurant;
+use App\Models\OrderItem;
+use App\Models\Order;
 use App\Models\Address;
 use App\Models\Area;
 use Illuminate\Database\Seeder;
@@ -20,7 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleTableSeeder::class);
         Restaurant::factory(10)->create();
         Meal::factory(50)->create();
+        OrderItem::factory(50)->create();
         Address::factory(30)->create();
         Area::factory(25)->create();
+        Order::factory(25)->create();
     }
 }

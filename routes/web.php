@@ -30,6 +30,7 @@ Route::group(['prefix' => '/customer', 'middleware' => 'auth'], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::resource('customers.addresses', AddressController::class);
     Route::resource('customers', CustomerController::class);
+    Route::post('customer/order/{id}/cancel', [OrderStatusController::class, 'update']);
 });
 
 Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
