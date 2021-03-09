@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('deliveryupdate', $delivery->id) }}" method="post">
+        <form action="{{ route('delivery.update', $delivery) }}" method="post">
             <input name="_method" type="hidden" value="PUT">
             @csrf
             <div class="field">

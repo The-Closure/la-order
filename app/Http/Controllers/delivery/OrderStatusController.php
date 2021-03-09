@@ -13,6 +13,14 @@ class OrderStatusController extends Controller
         $order= Order::findOrfail($id);
         $order->status='Done';
         $order->save();
-        return redirect()->route('orders.index')->withMessage('Order was Done');
+        return redirect()->back()->withMessage('Order was Done');
+    }
+
+    public function markAsAccepted($id)
+    {
+        $order= Order::findOrfail($id);
+        $order->status='Deliver';
+        $order->save();
+        return redirect()->back()->withMessage('Order was Done');
     }
 }

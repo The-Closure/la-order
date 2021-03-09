@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminMealsController;
 use App\Http\Controllers\Customer\MealController as CustomerMealController;
 use App\Http\Controllers\Customer\OrderStatusController as CustomerOrderStatusController;
 use App\Http\Controllers\Delivery\DeliveryController;
+use App\Http\Controllers\delivery\OrderAreaController;
 use App\Http\Controllers\Delivery\OrderStatusController;
 
 /*
@@ -43,14 +44,16 @@ Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => '/delivery', 'middleware' => 'auth'], function () {
-    Route::get('/showorder/{id}',[DeliveryController::class,'my_order_items']);
+    Route::get('/showorder',[DeliveryController::class,'my_order_items']);
     Route::post('/store',[DeliveryController::class,'store'])->name('delvierystore');
-    Route::get('/edit/{id}',[DeliveryController::class,'edit'])->name('deliveryedit');
-    Route::get('/show/{id}',[DeliveryController::class,'show'])->name('delvieryshow');
-    Route::get('/update',[DeliveryController::class,'update'])->name('deliveryupdate');
+    Route::get('/edit/{delivery}',[DeliveryController::class,'edit'])->name('deliveryedit');
+    Route::get('/show/{delivery}',[DeliveryController::class,'show'])->name('delivery.show');
+    Route::put('/{delivery}/update',[DeliveryController::class,'update'])->name('delivery.update');
     Route::view('/deliverycompleteregister', 'delivery.deliverycompleteregister');
     Route::post('/deliverycompleteregister', [DeliveryController::class,'store'])->name('deliverycompleteregister');
-    Route::get('/order/{id}/done', [OrderStatusController::class, 'markAsDone']);
+    Route::get('/order/{id}/done', [OrderStatusController::class, 'markAsDone'])->name('markAsDone');
+    Route::get('/order/{id}/accept', [OrderStatusController::class, 'markAsAccepted'])->name('markAsAccepted');
+    Route::get('/orders', [OrderAreaController::class, 'index'])->name('allOrders');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {

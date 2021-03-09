@@ -11,13 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderAreaController extends Controller
 {
-    public function test()
+    public function index()
     {
         $orders = Order::whereHas('user', function (Builder $query) {
-            $query->whereHas('address', function (Builder $q) {
+            $query->whereHas('addresses', function (Builder $q) {
                 $area_ids = Auth::user()->delivery->areas->pluck('id');
                 $q->whereIn('area_id', $area_ids);
             });
         });
+
+        $orders = Order::all();
+
+        return view('delivery.showorder', ['orders' => $orders]);
     }
 }

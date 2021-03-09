@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app1')
 
 @section('title', 'About Our Blog')
 @section('subtitle', 'This is where we talk about the blog')

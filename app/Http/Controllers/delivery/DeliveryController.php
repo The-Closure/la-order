@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Delivery;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
@@ -42,7 +43,7 @@ class DeliveryController extends Controller
             'working_hours'   => 'required',
             'vehicle'         => 'required|string|min:2',
         ]);
-        $userId = \Auth::id();
+        $userId =  Auth::id();
         $delivery = Delivery::create([
             'working_hours'   => $request->working_hours,
             'vehicle'         => $request->vehicle,
@@ -59,21 +60,22 @@ class DeliveryController extends Controller
      */
     public function show($id)
     {
-        $user=\Auth::user();
-        $userId = \Auth::id();
+        $user= Auth::user();
+        $userId =  Auth::id();
         $delivery=Delivery::where('user_id',$userId)->first();
         return view('delivery.show', ['user' => $user, 'delivery' => $delivery]);
         
         
     }
-    public function my_order_items($id){
-        
-        $userId = \Auth::id();
-        $delivery=Delivery::where('user_id',$userId);
-        $user = \Auth::user();
+    public function my_order_items()
+    {    
+        // $userId =  Auth::id();
+        // $delivery=Delivery::where('user_id',$userId)->first();
         // $orders = $user->deliveryOrders;
-        $delivery_id=$delivery->id;
-        $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["prepear"]);
+        // $delivery_id= $delivery->id;
+        // $delivery_id =  Auth::user()->delivery->id;
+        // $orders = Order::where('delivery_id',$delivery_id)->whereIn('status', ["prepare"]);
+        $orders = Auth::user()->deliveryOrders;
         return view('delivery.showorder', ['orders' => $orders]);
     }
 
@@ -83,12 +85,9 @@ class DeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Delivery $delivery)
     {
-        $userId = \Auth::id();
-        $delivery=Delivery::find($id)->first();
-    
-        return view('delivery.edit', $delivery);
+        return view('delivery.edit', ['delivery' => $delivery]);
         //return view('order.show', ['orders' => $orders,]);
     }
 
@@ -102,16 +101,18 @@ class DeliveryController extends Controller
     public function update(Request $request, Delivery $delivery)
     {
         $request->validate([
-            'working-hours'   => 'required',
+            'working_hours'   => 'required',
             'vehicle'         => 'required',
         ]);
-        $userId = \Auth::id();
-        $delivery = Delivery::update($request->only(['working-hours', 'vehicle']));
+        $userId =  Auth::id();
+        $delivery->update($request->only(['working-hours', 'vehicle']));
+        
         if ($delivery)
-            request()->session()->flash('success', 'Category was created successfully.');
+            request()->session()->flash('success', 'Item was created successfully.');
         else
             request()->session()->flash('danger', 'Something went wrong.');
-            return redirect()->route('delivery.show',['delivery'=> $delivery]);
+
+        return redirect()->route('delivery.show', ['delivery'=> $delivery]);
     }
 
     /**
