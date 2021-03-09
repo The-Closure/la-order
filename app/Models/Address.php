@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Models;
-use app\http\models\Area;
-use app\http\models\User;
+use App\models\Area;
+use App\models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

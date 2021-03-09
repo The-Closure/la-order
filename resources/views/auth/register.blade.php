@@ -33,7 +33,7 @@
                 </div>
             <!-- roles-->
             <div class="field">
-                <label class="label">permissin</label>
+                <label class="label">Permission</label>
                 <div class="control">
                   <div class="select">
                     <select name="role">

@@ -31,8 +31,8 @@ Route::get('/restaurants/{rest_id}/category/{cat_id}', [CustomerMealController::
 
 Route::group(['prefix' => '/customer', 'middleware' => 'auth'], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'create']);
-    Route::resource('customers.addresses', AddressController::class);
-    Route::resource('customers', CustomerController::class);
+    Route::resource('addresses', AddressController::class);
+    // Route::resource('customers', CustomerController::class);
     Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
 

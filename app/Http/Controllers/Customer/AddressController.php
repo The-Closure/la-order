@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
+use App\Models\Area;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
@@ -14,8 +17,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $address=Auth::user()->address;
-        return view('address.index', ['address' => $address]);
+        $addresses= Auth::user()->addresses;
+        return view('customers.addresses.index', ['addresses' => $addresses]);
     }
 
     /**
@@ -25,7 +28,9 @@ class AddressController extends Controller
      */
     public function create()
     {
-        //
+        $areas = Area::all()->pluck('id', 'name');
+
+        return view('customers.addresses.create', ['areas' => $areas]);
     }
 
     /**
@@ -36,7 +41,12 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Get this done please ;)
+        $request->validate([]);
+
+        Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
+        
+        return redirect()->back()->with('success', 'done dude');
     }
 
     /**
@@ -48,7 +58,7 @@ class AddressController extends Controller
     public function show($id)
     {
         $address=Auth::user()->address;
-        return view('address.show', ['address' => $address]);
+        return view('customers.addresses.show', ['address' => $address]);
     }
 
     /**
@@ -62,7 +72,7 @@ class AddressController extends Controller
         $address=Auth::user()->address;
         $address = Address::find($id);
 
-        return view('address.edit', ['address' => $address]);
+        return view('customers.addresses.edit', ['address' => $address]);
     }
 
     /**
@@ -84,7 +94,7 @@ class AddressController extends Controller
         } else {
             request()->session()->flash('danger', 'Something went wrong.');
         }
-        return redirect()->route('address.index');
+        return redirect()->route('customers.addresses.index');
 
     }
 
