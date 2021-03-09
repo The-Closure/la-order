@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         Meal::factory(50)->create();
         Address::factory(30)->create();
         Area::factory(25)->create();
+        Order::factory(25)->create();
     }
 }
