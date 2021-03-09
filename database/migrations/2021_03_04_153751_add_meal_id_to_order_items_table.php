@@ -14,8 +14,8 @@ class AddMealIdToOrderItemsTable extends Migration
     {
 
         Schema::table('order_items', function (Blueprint $table) {
-            $table->foreignId('meal_id')->after('id')->constrained();
-
+            $table->foreignId('meal_id')->after('price')->constrained();
+            $table->foreignId('order_id')->after('meal_id')->constrained();
         });
     }
 

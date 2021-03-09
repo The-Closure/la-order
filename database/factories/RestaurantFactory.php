@@ -29,6 +29,7 @@ class RestaurantFactory extends Factory
             'working_hours' => $this->faker->numberBetween(0, 12) . '-' . $this->faker->numberBetween(0, 12),
             'rating'    => $this->faker->numberBetween(0, 5),
             'epayment'  => $this->faker->boolean(),
+            'user_id'   => 1
         ];
     }
 }

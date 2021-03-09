@@ -9,6 +9,8 @@ use App\Http\Controllers\Customer\RestaurantController;
 use App\Http\Controllers\Restaurant\OrderController as RestaurantOrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 use App\Http\Controllers\Admin\AdminMealsController;
+use App\Http\Controllers\Customer\MealController as CustomerMealController;
+use App\Http\Controllers\Customer\OrderStatusController as CustomerOrderStatusController;
 use App\Http\Controllers\Delivery\DeliveryController;
 use App\Http\Controllers\Delivery\OrderStatusController;
 
@@ -25,16 +27,17 @@ use App\Http\Controllers\Delivery\OrderStatusController;
 
 Route::get('/', [RestaurantController::class, 'index'])->name('home');
 Route::resource('restaurants', RestaurantController::class)->only('show');
+Route::get('/restaurants/{rest_id}/category/{cat_id}', [CustomerMealController::class, 'index'])->name('restaurants.meals');
 
 Route::group(['prefix' => '/customer', 'middleware' => 'auth'], function () {
-    Route::resource('orders', OrderController::class)->only(['index', 'show']);
+    Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'create']);
     Route::resource('customers.addresses', AddressController::class);
     Route::resource('customers', CustomerController::class);
-    Route::post('customer/order/{id}/cancel', [OrderStatusController::class, 'update']);
+    Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
 
 Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
-    Route::resource('orders', RestaurantOrderController::class)->except('index');
+    Route::resource('restaurant.orders', RestaurantOrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
     Route::resource('restaurantmeals', MealController::class);
 });

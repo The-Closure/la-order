@@ -18,10 +18,10 @@
             <a class="navbar-item {{ Route::currentRouteName() == 'home' ? 'is-active':'' }}" href="{{ route('home') }}">
               Home
             </a>
-            {{-- <a class="navbar-item {{ Route::currentRouteName() == 'posts.index' ? 'is-active':'' }}" href="{{ route('posts.index') }}">
-              Blog Posts
+            <a class="navbar-item {{ Route::currentRouteName() == 'orders.create' ? 'is-active':'' }}" href="{{ route('orders.create') }}">
+              Cart
             </a>
-            <a class="navbar-item {{ Route::currentRouteName() == 'posts.create' ? 'is-active':'' }}" href="{{ route('posts.create') }}">
+            {{-- <a class="navbar-item {{ Route::currentRouteName() == 'posts.create' ? 'is-active':'' }}" href="{{ route('posts.create') }}">
               Create Post
             </a>
             <a class="navbar-item {{ Route::currentRouteName() == 'about' ? 'is-active':'' }}" href="{{ route('about') }}">

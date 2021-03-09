@@ -13,6 +13,6 @@ class OrderStatusController extends Controller
         $order->status = 'canceled';
         $order->save();
 
-        return $order;
+        return redirect()->back()->with('success', 'Order Was Canceled');
     }
 }

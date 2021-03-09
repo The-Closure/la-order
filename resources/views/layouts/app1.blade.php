@@ -15,6 +15,11 @@
     </section>
 
     @include('partials.footer')
+    <script>
+      const order = JSON.parse(localStorage.getItem('order')) || {
+        items: []
+      }
+    </script>
     @yield('script')
   </body>
 </html>

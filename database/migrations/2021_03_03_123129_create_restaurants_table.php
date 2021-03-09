@@ -22,6 +22,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('working_hours');
             $table->string('rating');
             $table->string('epayment');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ class MealFactory extends Factory
             'desc'  => $this->faker->text(40),
             'featured'  => $this->faker->imageUrl(250, 300),
             'price' => $this->faker->numberBetween(1000, 10000),
-            'status' => $this->faker->lastName,
+            'status' => 'available',
             'restaurant_id' => $this->faker->numberBetween(1, 10),
             'category_id'   => $this->faker->numberBetween(1, 5)
         ];

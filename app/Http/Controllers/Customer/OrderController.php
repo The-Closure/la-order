@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Meal;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('order.create');
     }
 
     /**
@@ -39,39 +40,41 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'total' => 'required',
-            'method'=> 'required',
-            'customer_id'=> 'required',
-
+            'items.*.meal_id' => 'required|exists:meals,id',
+            'items.*.quantity' => 'required|integer|min:1',
+            'items.*.price' => 'required',
         ]);
 
-        $order=Auth::user()->order->create([
-            'total'  => 0,
-            'status' => 'pending',
-            'method'=> 'direct',
-            'rating'=> '',
-            'feedback'=> '',
-            'customer_id' => Auth::user()->id,
-            'note'=> ''
+        $order = Auth::user()->orders()->create([
+            'total'         => 0,
+            'status'        => 'pending',
+            'method'        => 'direct',
+            'rating'        => -1,
+            'feedback'      => 'No yet',
+            'customer_id'   => Auth::user()->id,
+            'note'          => 'Not yet',
+            'delivery_id'   => 0
         ]);
 
         $orderItems = $request->items;
         $total=0;
-        foreach($orderItems as $object)
+        foreach($orderItems as $orderItem)
             {
-                $meal = Meal::find($object['meal_id']);
+                $meal = Meal::find($orderItem['meal_id']);
                 $newOrderItem = $order->orderItems()->create([
-                    'meal_id' => $object['meal_id'],
-                    'quantite'=> $object['quantite'],
+                    'meal_id' => $orderItem['meal_id'],
+                    'quantity'=> $orderItem['quantity'],
                     'price'=> $meal->price,
                     ]);
 
                 $total += $newOrderItem->price * $newOrderItem->quantity;
 
             }
-        return view('Order.show', [ 'order' => $order ]);
+        $order->update([
+            'total' => $total
+        ]);
+        return redirect()->route('orders.show', [ 'order' => $order ])->with('success', 'all is well');
     }
 
     /**
@@ -82,7 +85,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('order.show',['order'=>$order]);
+        return view('order.show',['order'=> $order]);
     }
 
     /**

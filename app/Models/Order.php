@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['total', 'status', 'method', 'rating', 'feedback', 'customer_id', 'note', 'delivery_id'];
     
     /**
      * Get the orderitems for the order.

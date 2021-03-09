@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Image;
 use App\Models\Meal;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {

@@ -22,16 +22,14 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'total'  => $this->faker->text,
+            'total'  => $this->faker->numberBetween(10000, 4000),
             'status' =>$this->faker->lastname,
             'note' =>$this->faker->name,
             'rating' =>$this->faker->numberBetween(0, 10),
             'feedback' =>$this->faker->name,
             'method' =>$this->faker->name,
             'customer_id' =>$this->faker->numberBetween(1, 20),
-            'delivary_id' =>$this->faker->numberBetween(1, 10),
-
-            
+            'delivery_id' =>$this->faker->numberBetween(1, 10),
         ];
     }
 }
