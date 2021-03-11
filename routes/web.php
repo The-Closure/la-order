@@ -30,20 +30,20 @@ Route::get('/', [RestaurantController::class, 'index'])->name('home');
 Route::resource('restaurants', RestaurantController::class)->only('show');
 Route::get('/restaurants/{rest_id}/category/{cat_id}', [CustomerMealController::class, 'index'])->name('restaurants.meals');
 
-Route::group(['prefix' => '/customer', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/customer', 'middleware' => 'role:customer'], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'create']);
     Route::resource('addresses', AddressController::class);
     // Route::resource('customers', CustomerController::class);
     Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
 
-Route::group(['prefix' => '/restaurant', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/restaurant', 'middleware' => 'role:owner'], function () {
     Route::resource('restaurant.orders', RestaurantOrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
     Route::resource('restaurantmeals', MealController::class);
 });
 
-Route::group(['prefix' => '/delivery', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/delivery', 'middleware' => 'role:delivery'], function () {
     Route::get('/showorder',[DeliveryController::class,'my_order_items']);
     Route::post('/store',[DeliveryController::class,'store'])->name('delvierystore');
     Route::get('/edit/{delivery}',[DeliveryController::class,'edit'])->name('deliveryedit');
@@ -56,7 +56,7 @@ Route::group(['prefix' => '/delivery', 'middleware' => 'auth'], function () {
     Route::get('/orders', [OrderAreaController::class, 'index'])->name('allOrders');
 });
 
-Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/admin', 'middleware' => 'role:admin'], function () {
     Route::resource('meals', AdminMealsController::class);
     Route::resource('restaurant', AdminRestaurantController::class);
 });
