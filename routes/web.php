@@ -38,8 +38,8 @@ Route::group(['prefix' => '/customer', 'middleware' => 'role:customer'], functio
 });
 
 Route::group(['prefix' => '/restaurant', 'middleware' => 'role:owner'], function () {
-    Route::resource('restaurant.orders', RestaurantOrderController::class)->except('index');
-    Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
+    Route::resource('restaurantorders', RestaurantOrderController::class)->except('index');
+    Route::get('/{restaurant}/orders', [RestaurantOrderController::class, 'index']);
     Route::resource('restaurantmeals', MealController::class);
 });
 

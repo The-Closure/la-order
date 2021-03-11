@@ -19,7 +19,7 @@ class RoleTableSeeder extends Seeder
         ]);
 
         $onwerRole = Role::create([
-            'name'         => 'onwer'
+            'name'         => 'owner'
         ]);
 
         $deliveryRole = Role::create([

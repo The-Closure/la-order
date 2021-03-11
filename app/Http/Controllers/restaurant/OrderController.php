@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -15,15 +17,21 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($restaurant_id)
+    public function index(Restaurant $restaurant)
     {
-        $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
-                $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
-                    $q->where('restaurant_id', $restaurant_id);
-                });
-        })->paginate(10);
+        Gate::authorize('owns-restaurant', $restaurant);
+        $restaurant_id = $restaurant->id;
+        // if (Auth::user()->restaurant->id == $restaurant_id) {
+            $orders = Order::whereHas('orderItems', function (Builder $query) use ($restaurant_id) {
+                    $query->whereHas('meal', function (Builder $q) use ($restaurant_id) {
+                        $q->where('restaurant_id', $restaurant_id);
+                    });
+            })->paginate(10);
+    
+            return view('owner.restaurantorder.index', ['orders' => $orders]);
+        // }
 
-        return view('owner.order.index', ['orders' => $orders]);
+        // return redirect()->back()->with('danger', 'you can not go there');
     }
 
     /**
@@ -56,11 +64,12 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        $orderitems=$order->OrderItem;
-
-
-        return view('owner.order.show',['order' => $order , 'orderitem'=>$orderitems]);
-
+        $orderitems = $order->orderItems;
+        foreach ($orderitems as $item) {
+             if ($item->meal->restaurant_id == Auth::user()->restaurant->id)
+                return view('owner.restaurantorder.show',['order' => $order , 'orderitems'=>$orderitems]);
+        }
+        return redirect()->back()->with('danger', 'you can not go there');
     }
 
     /**
@@ -89,7 +98,7 @@ class OrderController extends Controller
         $order=Order::find($id);
         $order->status=$request->status;
         $order->save();
-        return view('owner.order.show',['order' => $order]);
+        return view('owner.restaurantorder.show',['order' => $order]);
     }
 
     /**

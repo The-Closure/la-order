@@ -56,11 +56,12 @@ class MealController extends Controller
     $meal->name = $request->name;
     $meal->desc = $request->desc;
     $meal->status = $request->status;
-    $meal->catigory_id = $request->catigory_id;
-    $meal->name = $request->name;
+    $meal->category_id = $request->category_id;
+    $meal->price = $request->price;
+    $meal->restaurant_id = Auth::user()->restaurant->id;
     $file = $request->file('featured');
 
-        $url = '/storage/restauratmeals/'  . $file->extension();
+        $url = 'test.'  . $file->extension();
         Image::make($file)
             ->resize(600, 500)
             ->save(public_path($url));
@@ -72,7 +73,7 @@ class MealController extends Controller
             request()->session()->flash('error', 'Something went wrong.');
         }
 
-        return redirect()->route('restaurantmeals.show');
+        return redirect()->route('restaurantmeals.show', $meal);
         }
     /**
      * Display the specified resource.
@@ -82,7 +83,7 @@ class MealController extends Controller
      */
     public function show($id)
     {
-        $meal = Meal::where($id);
+        $meal = Meal::find($id);
         return view('restaurantmeals.show', ['meal' => $meal]);
     }
 
@@ -125,8 +126,7 @@ class MealController extends Controller
         $meal->name = $request->name;
         $meal->desc = $request->desc;
         $meal->status = $request->status;
-        $meal->catigory_id = $request->catigory_id;
-        $meal->name = $request->name;
+        $meal->category_id = $request->category_id;
         $file = $request->file('featured');
 
         $url = '/storage/restaurantmeals/'  . $file->extension();

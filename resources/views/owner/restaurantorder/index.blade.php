@@ -7,12 +7,14 @@
     <div class="columns is-multiline">
         @foreach ($orders as $order)
         <div class="column is-4">
-        <a href="{{ route('orders.show', $order->$id) }}">
             <div class="card">
-            <div class="card-content">
-                <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">{{ $order->total }}</p>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <a href="{{ route('restaurantorders.show', $order) }}">
+                                {{ $order->user->name }}
+                            </a>
+                            <p class="title is-4">{{ $order->total }}</p>
                     <p class="title is-4">{{ $order->note }}</p>
                     <p class="title is-4">{{ $order->rating }}</p>
                     <p class="title is-4">{{ $order->feedback }}</p>
@@ -20,7 +22,7 @@
                             <label class="label">status</label>
                             <div class="control">
                                 <div class="select">
-                                    <select name="{{ $order->status}}">
+                                    <select name="status" value="{{ $order->status }}" disabled={{ $order->status == 'Done' || $order->status == 'delivering' }}>
                                         <option value="preparing">Preparing</option>
                                         <option value="delivering">delivering</option>
                                         <option value="rejected">Rejected</option>
@@ -35,7 +37,6 @@
                 </div>
             </div>
             </div>
-        </a>
         </div>
         @endforeach
     </div>

@@ -1,13 +1,31 @@
-@extends('layaout.app1')
+@extends('layouts.app1')
 
 @section('content')
 <div class="container">
-    <form action="{{ route('restaurantmeals.store') }}" method="post">
+  @error('name')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+  @error('desc')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+  @error('status')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+  @error('featured')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+  @error('price')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+  @error('category_id')
+    <p class="help is-danger">{{ $message }}</p>
+  @enderror
+    <form action="{{ route('restaurantmeals.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="field">
             <label class="label">Name Meal</label>
             <div class="control">
-              <input class="input {{ $errors->has('name meal') ? 'is-danger':'' }} " type="text"  name='name meal' placeholder="name meal ..."> {{ old('name meal') }}
+              <input class="input {{ $errors->has('name meal') ? 'is-danger':'' }} " type="text"  name='name' placeholder="name meal ..."> {{ old('name meal') }}
               @error('name-meal')
                         <p class="help is-danger">{{ $message }}</p>
                     @enderror
@@ -16,7 +34,7 @@
           <div class="field">
             <label class="label">Description</label>
             <div class="control">
-              <textarea class="textarea {{ $errors->has('description') ? 'is-danger':'' }} "  name='descrription' placeholder="Description of meal">{{ old('descrription') }}</textarea>
+              <textarea class="textarea {{ $errors->has('description') ? 'is-danger':'' }} "  name='desc' placeholder="Description of meal">{{ old('descrription') }}</textarea>
               @error('description')
                         <p class="help is-danger">{{ $message }}</p>
                     @enderror
@@ -54,18 +72,18 @@
                 @enderror
           </div>
           <label>
-            <input type="radio" name="boolean" value="true">
+            <input type="radio" name="status" value="1">
             Active
           </label>
           <label>
-            <input type="radio" name="boolean" value="false">
+            <input type="radio" name="status" value="0">
             Not Active
           </label>
           <div class="field">
             <label class="label">Price Meal</label>
             <div class="control">
-              <input class="input {{ $errors->has('price meal') ? 'is-danger':'' }} " type="text"  name='price meal'placeholder="Price"> {{ old('price meal') }}
-              @error('price meal')
+              <input class="input {{ $errors->has('price') ? 'is-danger':'' }} " type="text"  name='price'placeholder="Price"> {{ old('price meal') }}
+              @error('price')
                         <p class="help is-danger">{{ $message }}</p>
                     @enderror
             </div>

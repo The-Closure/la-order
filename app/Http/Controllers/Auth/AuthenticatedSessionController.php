@@ -32,7 +32,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $redirect = '/';
+        // dd(Auth::user());
+        if (Auth::user()->getRoleNames()->first() == 'admin')
+            $redirect = '/admin/meals';
+        else if (Auth::user()->getRoleNames()->first() == 'customer')
+            $redirect = '/';
+        else if (Auth::user()->getRoleNames()->first() == 'delivery')
+            $redirect = '/delivery/orders';
+        else if (Auth::user()->getRoleNames()->first() == 'owner')
+            $redirect = '/restaurant/restaurantmeals';
+
+        return redirect()->intended($redirect);
     }
 
     /**

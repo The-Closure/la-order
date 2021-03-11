@@ -21,6 +21,11 @@
             <a class="navbar-item {{ Route::currentRouteName() == 'orders.create' ? 'is-active':'' }}" href="{{ route('orders.create') }}">
               Cart
             </a>
+            @role('owner')
+            <a class="navbar-item {{ Route::currentRouteName() == 'orders.create' ? 'is-active':'' }}" href="{{ route('orders.create') }}">
+              Cart
+            </a>
+            @endrole
             {{-- <a class="navbar-item {{ Route::currentRouteName() == 'posts.create' ? 'is-active':'' }}" href="{{ route('posts.create') }}">
               Create Post
             </a>

@@ -6,7 +6,7 @@
     <div class="columns is-multiline">
         @foreach ($meals as $meal)
         <div class="columns is-4">
-            <a href="{{ route('restaurantmeals.show') }}">
+            <a href="{{ route('restaurantmeals.show', $meal) }}">
             <div class="card">
                 <div class="card-image">
                   <figure class="image is-4by3">
