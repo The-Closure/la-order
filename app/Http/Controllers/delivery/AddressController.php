@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\restaurant;
+namespace App\Http\Controllers\delivery;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
+use App\Models\Area;
 use Illuminate\Http\Request;
-use App\Models\Restaurant;
-use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
-class RestaurantsController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,8 @@ class RestaurantsController extends Controller
      */
     public function index()
     {
-        //
+        $addresses= Auth::user()->addresses;
+        return view('delivery.addresses.index', ['addresses' => $addresses]);
     }
 
     /**
@@ -27,7 +28,9 @@ class RestaurantsController extends Controller
      */
     public function create()
     {
-        return view('restaurants.create');
+        $areas = Area::all()->pluck('id', 'name');
+
+        return view('delivery.addresses.create', ['areas' => $areas]);
     }
 
     /**
@@ -38,25 +41,12 @@ class RestaurantsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'             => 'required',
-            'phone'            => 'required',
-            'logo'             => 'required',
-            'has_delivery'     => 'required',
-            'working_hours'    => 'required',
-            'epayment'         => 'required',
-        ]);
-        $restaurants= Restaurant::create([
-       'name'          => $request->name,
-       'phone'         => $request->phone,
-       'logo'          => $request->logo,
-       'has_delivery'  => "1",
-       'working_hours' => $request->working_hours,
-       'epayment'      => "1",
-       'rating'        => "7-5",
-       'user_id'       => Auth::user()->id,
-        ]);
-        return redirect()->route('onweraddcreate',$restaurants->id);
+        // TODO: Get this done please ;)
+        $request->validate([]);
+
+        Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
+        
+        return redirect()->back()->with('success', 'done dude');
     }
 
     /**
@@ -65,13 +55,10 @@ class RestaurantsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)   
+    public function show($id)
     {
-        $restaurants=Restaurant::find($id);
-        $categories = Category::all();
- 
-        return view("restaurants.show",["restaurants"=>$restaurants,"categories"=>$categories]);
-       // return view('restaurants.show', ["restaurants" => $restaurants]);
+        $address=Auth::user()->address;
+        return view('delivery.addresses.show', ['address' => $address]);
     }
 
     /**
@@ -82,7 +69,10 @@ class RestaurantsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $address=Auth::user()->address;
+        $address = Address::find($id);
+
+        return view('delivery.addresses.edit', ['address' => $address]);
     }
 
     /**
@@ -94,7 +84,18 @@ class RestaurantsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $address = Address::find($id);
+
+        $address->city = $request->city;
+        $address->street = $request->street;
+        $address->details = $request->details;
+        if($address->save()) {
+            request()->session()->flash('success', 'address was updated successfully.');
+        } else {
+            request()->session()->flash('danger', 'Something went wrong.');
+        }
+        return redirect()->route('delivery.addresses.index');
+
     }
 
     /**
@@ -105,6 +106,6 @@ class RestaurantsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
