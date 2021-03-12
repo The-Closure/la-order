@@ -112,7 +112,7 @@ class DeliveryController extends Controller
         else
             request()->session()->flash('danger', 'Something went wrong.');
 
-        return redirect()->route('delivery.show', ['delivery'=> $delivery]);
+        return redirect()->route('addresses.create', ['delivery'=> $delivery]);
     }
 
     /**

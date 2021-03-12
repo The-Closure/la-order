@@ -66,11 +66,11 @@ class RegisteredUserController extends Controller
         $User_id=Auth::id();
         
         if($role==(Role::findByName('admin'))){
-            return redirect()->route('adminhome');
+            return redirect()->route('addresses.create');
 
         }
         elseif($role==(Role::findByName('onwer'))){
-            return redirect()->route('restaurantmeals.index');
+            return redirect()->route('restaurants.create');
 
         }
         elseif($role==(Role::findByName('delivery'))){
@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
 
         }
         else{
-            return redirect()->route('customers.show');
+            return redirect()->route('customers.addresses.create');
         }
 
 

@@ -81,7 +81,7 @@ class RestaurantController extends Controller
 
         ]);
         $restaurnt = Restaurant::find($id);
-        $restaurnt -> id = $request -> id;
+        //$restaurnt -> id = $request -> id;
         $restaurnt -> name = $request -> name;
         $restaurnt -> phone = $request -> phone;
         $restaurnt -> logo = $request -> logo;

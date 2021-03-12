@@ -6,6 +6,7 @@ use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\RestaurantController;
+use App\Http\Controllers\restaurant\RestaurantsController;
 use App\Http\Controllers\Restaurant\OrderController as RestaurantOrderController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 use App\Http\Controllers\Admin\AdminMealsController;
@@ -32,7 +33,7 @@ Route::get('/restaurants/{rest_id}/category/{cat_id}', [CustomerMealController::
 
 Route::group(['prefix' => '/customer', 'middleware' => ['role:customer']], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'create']);
-    Route::resource('addresses', AddressController::class);
+   // Route::resource('addresses/{customer}', AddressController::class);
     // Route::resource('customers', CustomerController::class);
     Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
@@ -40,6 +41,8 @@ Route::group(['prefix' => '/customer', 'middleware' => ['role:customer']], funct
 Route::group(['prefix' => '/restaurant', 'middleware' => ['role:onwer']], function () {
     Route::resource('restaurant.orders', RestaurantOrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
+   // Route::resource('addresses/{restaurant}', AddressController::class);
+    Route::resource('restaurants', RestaurantsController::class);
     Route::resource('restaurantmeals', MealController::class);
 });
 
@@ -54,6 +57,7 @@ Route::group(['prefix' => '/delivery', 'middleware' => ['role:delivery']], funct
     Route::get('/order/{id}/done', [OrderStatusController::class, 'markAsDone'])->name('markAsDone');
     Route::get('/order/{id}/accept', [OrderStatusController::class, 'markAsAccepted'])->name('markAsAccepted');
     Route::get('/orders', [OrderAreaController::class, 'index'])->name('allOrders');
+   // Route::resource('addresses/{delivery}', AddressController::class);
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => ['role:admin']], function () {
