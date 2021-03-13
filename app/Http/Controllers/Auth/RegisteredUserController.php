@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
 
         }
         else{
-            return redirect()->route('customers.addresses.create');
+            return redirect()->route('customeraddcreate');
         }
 
 

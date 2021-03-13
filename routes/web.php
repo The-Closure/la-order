@@ -35,7 +35,12 @@ Route::get('/restaurants/{rest_id}/category/{cat_id}', [CustomerMealController::
 
 Route::group(['prefix' => '/customer', 'middleware' => ['role:customer']], function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'create']);
-    Route::resource('addresses', AddressController::class);
+    Route::resource('addresses', AddressController::class, [
+        'names' => [
+            'create' => 'customeraddcreate',
+            'store' => 'customeraddstore',
+        
+        ]]);
     // Route::resource('customers', CustomerController::class);
     Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
@@ -64,7 +69,12 @@ Route::group(['prefix' => '/delivery', 'middleware' => ['role:delivery']], funct
     Route::get('/order/{id}/done', [OrderStatusController::class, 'markAsDone'])->name('markAsDone');
     Route::get('/order/{id}/accept', [OrderStatusController::class, 'markAsAccepted'])->name('markAsAccepted');
     Route::get('/orders', [OrderAreaController::class, 'index'])->name('allOrders');
-    Route::resource('addresses', DeliveryAddressController::class);
+    Route::resource('addresses', DeliveryAddressController::class, [
+        'names' => [
+            'create' => 'deliveryaddcreate',
+            'store' => 'deliveryaddstore',
+        
+        ]]);
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => ['role:admin']], function () {

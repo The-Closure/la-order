@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Restaurant;
 
 class AddressController extends Controller
 {
@@ -45,8 +46,8 @@ class AddressController extends Controller
         $request->validate([]);
 
         Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
-        
-        return redirect()->back()->with('success', 'done dude');
+        $restaurants = Restaurant::all();
+        return view('restaurants.index', ['restaurants' => $restaurants]);
     }
 
     /**

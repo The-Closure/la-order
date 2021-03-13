@@ -49,7 +49,8 @@ class DeliveryController extends Controller
             'vehicle'         => $request->vehicle,
             'user_id'         => $userId,
             ]);
-        return redirect()->route('delvieryshow', $delivery->id);
+        return redirect()->route('deliveryaddcreate', $delivery->id);
+       // return redirect()->route('delvieryshow', $delivery->id);
     }
 
     /**
@@ -112,7 +113,7 @@ class DeliveryController extends Controller
         else
             request()->session()->flash('danger', 'Something went wrong.');
 
-        return redirect()->route('addresses.create', ['delivery'=> $delivery]);
+        return redirect()->route('delivery.show', ['delivery'=> $delivery]);
     }
 
     /**

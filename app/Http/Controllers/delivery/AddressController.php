@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Delivery;
 
 class AddressController extends Controller
 {
@@ -45,8 +46,10 @@ class AddressController extends Controller
         $request->validate([]);
 
         Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
+        $user_id=Auth::user()->id;
+        $delivery= delivery::where('user_id',$user_id)->first();
         
-        return redirect()->back()->with('success', 'done dude');
+        return redirect()->route('delivery.show', $delivery->id);
     }
 
     /**
