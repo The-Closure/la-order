@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('onweraddstore') }}" method="post">
+        <form action="{{ route('owneraddstore') }}" method="post">
             @csrf
             <div class="field">
                 <label class="label">City</label>

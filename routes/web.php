@@ -45,13 +45,13 @@ Route::group(['prefix' => '/customer', 'middleware' => ['role:customer']], funct
     Route::post('orders/{order}/cancel', [CustomerOrderStatusController::class, 'update'])->name('order.cancel');
 });
 
-Route::group(['prefix' => '/restaurant', 'middleware' => ['role:onwer']], function () {
+Route::group(['prefix' => '/restaurant', 'middleware' => ['role:owner']], function () {
     Route::resource('restaurant.orders', RestaurantOrderController::class)->except('index');
     Route::get('/{restaurant_id}/orders', [RestaurantOrderController::class, 'index']);
     Route::resource('addresses', RestaurantAddressController::class, [
         'names' => [
-            'create' => 'onweraddcreate',
-            'store' => 'onweraddstore',
+            'create' => 'owneraddcreate',
+            'store' => 'owneraddstore',
         
         ]]);
     Route::resource('restaurants', RestaurantsController::class);

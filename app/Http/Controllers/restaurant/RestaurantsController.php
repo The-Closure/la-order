@@ -56,7 +56,7 @@ class RestaurantsController extends Controller
        'rating'        => "7-5",
        'user_id'       => Auth::user()->id,
         ]);
-        return redirect()->route('onweraddcreate',$restaurants->id);
+        return redirect()->route('owneraddcreate',$restaurants->id);
     }
 
     /**

@@ -56,20 +56,20 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]));
         $role = Role::find($request->role);
-        $User=new User();
-        $User->name = $user->name;
-        $User->phone = $user->phone;
-        //$User->role_id = $request->role_id;
-        $User->email = $user->email;
-        $User->password = $user->password;
+        // $User=new User();
+        // $User->name = $user->name;
+        // $User->phone = $user->phone;
+        // //$User->role_id = $request->role_id;
+        // $User->email = $user->email;
+        // $User->password = $user->password;
         $user->assignRole($role);
-        $User_id=Auth::id();
+        // $User_id=Auth::id();
         
         if($role==(Role::findByName('admin'))){
             return redirect()->route('addresses.create');
 
         }
-        elseif($role==(Role::findByName('onwer'))){
+        elseif($role==(Role::findByName('owner'))){
             return redirect()->route('restaurants.create');
 
         }

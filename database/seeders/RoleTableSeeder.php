@@ -17,8 +17,8 @@ class RoleTableSeeder extends Seeder
             'name'         => 'admin'
         ]);
 
-        $onwerRole = \Spatie\Permission\Models\Role::create([
-            'name'         => 'onwer'
+        $ownerRole = \Spatie\Permission\Models\Role::create([
+            'name'         => 'owner'
         ]);
 
         $deliveryRole = \Spatie\Permission\Models\Role::create([
