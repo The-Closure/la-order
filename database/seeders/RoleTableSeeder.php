@@ -18,7 +18,7 @@ class RoleTableSeeder extends Seeder
             'name'         => 'admin'
         ]);
 
-        $onwerRole = Role::create([
+        $ownerRole = Role::create([
             'name'         => 'owner'
         ]);
 

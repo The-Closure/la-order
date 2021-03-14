@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Area;
 use Illuminate\Http\Request;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
@@ -18,7 +19,7 @@ class AddressController extends Controller
     public function index()
     {
         $addresses= Auth::user()->addresses;
-        return view('customers.addresses.index', ['addresses' => $addresses]);
+        return view('restaurants.addresses.index', ['addresses' => $addresses]);
     }
 
     /**
@@ -30,7 +31,7 @@ class AddressController extends Controller
     {
         $areas = Area::all()->pluck('id', 'name');
 
-        return view('customers.addresses.create', ['areas' => $areas]);
+        return view('restaurants.addresses.create', ['areas' => $areas]);
     }
 
     /**
@@ -45,8 +46,10 @@ class AddressController extends Controller
         $request->validate([]);
 
         Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
-        
-        return redirect()->back()->with('success', 'done dude');
+        $user_id=Auth::user()->id;
+        $restaurants=Restaurant::where('user_id',$user_id)->first();
+        $restaurants_id=$restaurants->id;
+       return redirect()->route('restaurants.show', $restaurants_id);
     }
 
     /**
@@ -58,7 +61,7 @@ class AddressController extends Controller
     public function show($id)
     {
         $address=Auth::user()->address;
-        return view('customers.addresses.show', ['address' => $address]);
+        return view('restaurants.addresses.show', ['address' => $address]);
     }
 
     /**
@@ -72,7 +75,7 @@ class AddressController extends Controller
         $address=Auth::user()->address;
         $address = Address::find($id);
 
-        return view('customers.addresses.edit', ['address' => $address]);
+        return view('restaurants.addresses.edit', ['address' => $address]);
     }
 
     /**
@@ -94,7 +97,7 @@ class AddressController extends Controller
         } else {
             request()->session()->flash('danger', 'Something went wrong.');
         }
-        return redirect()->route('customers.addresses.index');
+        return redirect()->route('restaurants.addresses.index');
 
     }
 
