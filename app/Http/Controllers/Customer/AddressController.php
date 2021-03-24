@@ -45,7 +45,7 @@ class AddressController extends Controller
         $request->validate([]);
 
         Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
-        
+
         return redirect()->back()->with('success', 'done dude');
     }
 
@@ -106,6 +106,6 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 }

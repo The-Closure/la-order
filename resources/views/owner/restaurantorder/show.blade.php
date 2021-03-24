@@ -7,32 +7,33 @@
                     <div class="columns">
                         <div class="column is-6">
                             @foreach ($orderitems as $orderitem)
-            <div class="column is-4">
-                <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="{{ $orderitem->meal->featured_image }}" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="media">
-                    <div class="media-content">
-                        <p class="title is-4">{{  $orderitem->meal->name}}</p>
-                        <p class="subtitle is-6">{{  $orderitem->price }}</p>
-                        <p class="title is-4">{{  $orderitem->quantity}}</p>
-                        <p class="title is-4">{{  $orderitem->price * $orderitem->quantity}}</p>
+                                <div class="column is-4">
+                                    <div class="card">
+                                        <div class="card-image">
+                                            <figure class="image is-4by3">
+                                                <img src="{{ $orderitem->meal->featured_image }}" alt="Placeholder image">
+                                            </figure>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="media">
+                                                <div class="media-content">
+                                                    <p class="title is-4">{{ $orderitem->meal->name }}</p>
+                                                    <p class="subtitle is-6">{{ $orderitem->price }}</p>
+                                                    <p class="title is-4">{{ $orderitem->quantity }}</p>
+                                                    <p class="title is-4">{{ $orderitem->price * $orderitem->quantity }}
+                                                    </p>
 
-                    </div>
-                    </div>
+                                                </div>
+                                            </div>
 
-                    <div class="content">
-                    {{  $orderitem->meal->desc }}
-                    </div>
-                </div>
-                </div>
-            </a>
-            </div>
-            @endforeach
+                                            <div class="content">
+                                                {{ $orderitem->meal->desc }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                            @endforeach
 
                         </div>
                     </div>
