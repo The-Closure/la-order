@@ -46,7 +46,8 @@ class AdminMealsController extends Controller
             'category_id'=> 'required'
         ]);
         $meal=Meal::create($request->only(['name','desc','status','featured','price','restaurant_id','category_id']));
-        return view("Admin.meals.show",["meal"=>$meal]);
+        // return view("Admin.meals.show",["meal"=>$meal]);
+        return $meal;
     }
 
     /**
@@ -60,6 +61,7 @@ class AdminMealsController extends Controller
         // when he open the category page and put show he has to send " return view("Admin.meals.show",$id);
         $meals=Meal::where('category_id',$id);
         return view("Admin.meals.show",["meals"=>$meals]);
+        return $meals;
     }
 
     /**

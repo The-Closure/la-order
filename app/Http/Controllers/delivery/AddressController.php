@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\delivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Restaurant;
+use App\Models\Delivery;
 
 class AddressController extends Controller
 {
@@ -18,8 +18,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $addresses = Auth::user()->addresses;
-        return view('customers.addresses.index', ['addresses' => $addresses]);
+        $addresses= Auth::user()->addresses;
+        return view('delivery.addresses.index', ['addresses' => $addresses]);
     }
 
     /**
@@ -31,7 +31,7 @@ class AddressController extends Controller
     {
         $areas = Area::all()->pluck('id', 'name');
 
-        return view('customers.addresses.create', ['areas' => $areas]);
+        return view('delivery.addresses.create', ['areas' => $areas]);
     }
 
     /**
@@ -46,10 +46,10 @@ class AddressController extends Controller
         $request->validate([]);
 
         Auth::user()->addresses()->create($request->only(['city', 'area_id', 'street', 'details']));
-
-        return redirect()->back()->with('success', 'done dude');
-        $restaurants = Restaurant::all();
-        return view('restaurants.index', ['restaurants' => $restaurants]);
+        $user_id=Auth::user()->id;
+        $delivery= delivery::where('user_id',$user_id)->first();
+        
+        return redirect()->route('delivery.show', $delivery->id);
     }
 
     /**
@@ -60,8 +60,8 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        $address = Auth::user()->address;
-        return view('customers.addresses.show', ['address' => $address]);
+        $address=Auth::user()->address;
+        return view('delivery.addresses.show', ['address' => $address]);
     }
 
     /**
@@ -72,10 +72,10 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        $address = Auth::user()->address;
+        $address=Auth::user()->address;
         $address = Address::find($id);
 
-        return view('customers.addresses.edit', ['address' => $address]);
+        return view('delivery.addresses.edit', ['address' => $address]);
     }
 
     /**
@@ -92,12 +92,13 @@ class AddressController extends Controller
         $address->city = $request->city;
         $address->street = $request->street;
         $address->details = $request->details;
-        if ($address->save()) {
+        if($address->save()) {
             request()->session()->flash('success', 'address was updated successfully.');
         } else {
             request()->session()->flash('danger', 'Something went wrong.');
         }
-        return redirect()->route('customers.addresses.index');
+        return redirect()->route('delivery.addresses.index');
+
     }
 
     /**
@@ -108,5 +109,6 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
+        
     }
 }

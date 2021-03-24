@@ -56,7 +56,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]));
         $role = Role::find($request->role);
-        // BIG CLAP FOR NOUR
         // $User=new User();
         // $User->name = $user->name;
         // $User->phone = $user->phone;
@@ -66,11 +65,12 @@ class RegisteredUserController extends Controller
         $user->assignRole($role);
         // $User_id=Auth::id();
         
-        if ($role->name == 'admin') {
-            return redirect()->route('adminhome');
+        if($role==(Role::findByName('admin'))){
+            return redirect()->route('addresses.create');
+
         }
-        elseif($role==(Role::findByName('onwer'))){
-            return redirect()->route('restaurantmeals.index');
+        elseif($role==(Role::findByName('owner'))){
+            return redirect()->route('restaurants.create');
 
         }
         elseif($role==(Role::findByName('delivery'))){
@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
 
         }
         else{
-            return redirect()->route('customers.show');
+            return redirect()->route('customeraddcreate');
         }
 
 

@@ -9,7 +9,7 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone','logo','has_delivery','working_hours','rating','epayment'];
+    protected $fillable = ['name', 'phone','logo','has_delivery','working_hours','rating','epayment','user_id'];
 
     /**
      * Get the user that owns the phone.
