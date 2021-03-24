@@ -14,8 +14,8 @@
             <div class="content">
                 {{ $customer->email }}
             </div>
-           
-           
+
+
             <div class="content">
                 {{ $customer->password }}
             </div>
@@ -25,6 +25,6 @@
         </div>
     </div>
     <a href="{{ route('customeres.edit', $customer->id) }}" class="button is-primary">Edit Customer</a>
-   
+
     </div>
 @endsection

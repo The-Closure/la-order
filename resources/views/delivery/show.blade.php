@@ -1,7 +1,7 @@
 @extends('layouts.app1')
 
-@section('title', "delivery man")
-@section('subtitle', 'welcom mr '.Auth::user()->name)
+@section('title', 'delivery man')
+@section('subtitle', 'welcom mr ' . Auth::user()->name)
 
 @section('content')
     <div class="container">
@@ -12,13 +12,13 @@
                 <div class="tags">
                 </div>
                 <div class="content">
-                   your vehicle: {{ $delivery->vehicle }}
+                    your vehicle: {{ $delivery->vehicle }}
                 </div>
                 <p class="content">
                     delivery at: {{ $delivery->created_at }}
                 </p>
                 <div class="columns">
-                      <a href="{{ route('deliveryedit', $delivery->id) }}" class="button is-primary">Edit</a>
+                    <a href="{{ route('deliveryedit', $delivery->id) }}" class="button is-primary">Edit</a>
                 </div>
             </div>
         </div>

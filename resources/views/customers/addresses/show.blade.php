@@ -15,14 +15,14 @@
             <div class="content">
                 {{ $address->street }}
             </div>
-           
-           
+
+
             <div class="content">
                 {{ $address->details }}
             </div>
         </div>
     </div>
     <a href="{{ route('addresses.edit', $address->id) }}" class="button is-primary">Edit address</a>
-   
+
     </div>
 @endsection

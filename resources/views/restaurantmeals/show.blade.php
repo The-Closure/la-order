@@ -22,7 +22,7 @@
         </div>
         <div class="columns">
             <div class="column is-2">
-              <a href="{{ route('restaurantmeals.edit', $meal->id) }}" class="button is-primary">Edit Meal</a>
+                <a href="{{ route('restaurantmeals.edit', $meal->id) }}" class="button is-primary">Edit Meal</a>
             </div>
             <div class="column is-2">
                 <form action="{{ route('restaurantmeals.destroy', $meal->id) }}" method="post">
