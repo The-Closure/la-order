@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\controller\CategoryController;
+use App\Http\Controllers\Customer\OrderStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('\categories',CategoryController::class);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::post('customer/order/{id}/cancel', [OrderStatusController::class, 'update']);
